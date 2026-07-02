@@ -1,4 +1,5 @@
 import * as React from "react";
+import { rasterIcons, rasterExt } from "@/data/iconAssets";
 
 type P = React.SVGProps<SVGSVGElement> & { size?: number };
 
@@ -18,102 +19,110 @@ const base = (size = 24): P => ({
 export const categoryPaths: Record<string, React.ReactNode> = {
   excavator: (
     <>
-      <path d="M2 20h20" />
-      <rect x="3" y="15" width="9" height="4" rx="1" />
-      <path d="M5 15v-3h4v3" />
-      <path d="M11 13l4-4 4 3" />
-      <path d="M19 12l1.5 4H15" />
-      <circle cx="6" cy="20" r="1.4" />
-      <circle cx="10" cy="20" r="1.4" />
+      <path d="M2 20.5h20" />
+      <rect x="3" y="16" width="10" height="3.2" rx="1.6" />
+      <path d="M6 16v-3.4a1 1 0 0 1 1-1h3.6a1 1 0 0 1 1 1V16" />
+      <path d="M7.6 14.2h2.3" />
+      <path d="M11.6 12.9l3.6-3 3.9 3.7" />
+      <path d="M19.1 13.6l.9 2.8-3.5.2" />
     </>
   ),
   concrete: (
     <>
-      <path d="M3 20h18" />
-      <path d="M4 20v-4l3-6h7l3 6v4" />
-      <path d="M7 10V7h7v3" />
-      <path d="M17 12l4-5" />
-      <path d="M21 7h-3" />
+      <path d="M2 20.5h20" />
+      <path d="M4 16.4V13h2.5l1.6 2.2" />
+      <rect x="8" y="8" width="9.6" height="6" rx="3" transform="rotate(-13 12.8 11)" />
+      <path d="M4 16.4h14" />
+      <path d="M17.4 13.7l2 1.3" />
+      <circle cx="7" cy="18.2" r="1.7" />
+      <circle cx="16.2" cy="18.2" r="1.7" />
     </>
   ),
   crane: (
     <>
-      <path d="M4 21h9" />
-      <path d="M7 21V6" />
-      <path d="M7 6h13" />
-      <path d="M7 9l6-3" />
-      <path d="M20 6v3" />
-      <path d="M20 9v3" />
-      <path d="M5 21l2-15 2 15" />
+      <path d="M2 20.5h20" />
+      <path d="M3.5 16.3h9" />
+      <path d="M4 16.3v-2.4h4.2l1.2 1.7v.7" />
+      <path d="M9 15.2 19.5 7" />
+      <path d="M9 15.2l-1.6 1.1" />
+      <path d="M19.5 7v2.7" />
+      <path d="M18.7 9.7h1.6" />
+      <circle cx="6" cy="18.2" r="1.7" />
+      <circle cx="10" cy="18.2" r="1.7" />
     </>
   ),
   roller: (
     <>
-      <circle cx="6.5" cy="16" r="4" />
-      <circle cx="18" cy="17" r="2.5" />
-      <path d="M10.5 16h4l1-5h3l1 3" />
-      <path d="M10 11h6" />
-      <path d="M14 11V8h3v3" />
+      <path d="M2 20.5h20" />
+      <circle cx="7" cy="15.6" r="3.5" />
+      <circle cx="7" cy="15.6" r="0.6" />
+      <path d="M10.5 15.6h3.2l1-4.4h3.3" />
+      <path d="M13.6 11.2V8h3.5v3.2" />
+      <circle cx="17.7" cy="16.8" r="1.8" />
     </>
   ),
   port: (
     <>
-      <path d="M3 21h18" />
-      <rect x="4" y="13" width="6" height="4" rx="0.5" />
-      <rect x="5" y="9" width="4" height="3" rx="0.5" />
-      <path d="M13 21v-9h6v9" />
-      <path d="M13 12l3-4h3" />
-      <path d="M16 8V5" />
+      <path d="M2 20.5h20" />
+      <rect x="6.4" y="13.2" width="9.6" height="3.2" rx="0.4" />
+      <rect x="8" y="16.4" width="9.6" height="3.2" rx="0.4" />
+      <path d="M9 13.2v-2.5M14 13.2v-2.5" />
+      <path d="M8.2 10.7h6.6" />
+      <path d="M11.5 10.7V8.2" />
     </>
   ),
   mining: (
     <>
-      <path d="M2 19h20" />
-      <path d="M3 19l2-6h11l3 6" />
-      <path d="M5 13V9h9v4" />
-      <circle cx="7" cy="19" r="1.6" />
-      <circle cx="16" cy="19" r="1.6" />
-      <path d="M18 9l3 2" />
+      <path d="M2 20.5h20" />
+      <path d="M8.6 14.4l1.2-4.6a1 1 0 0 1 1-.8H20l-1.5 6" />
+      <path d="M4 14.4V11h3.3l1.3 2v1.4" />
+      <path d="M4 14.4h14.5" />
+      <circle cx="7.4" cy="17.3" r="2.2" />
+      <circle cx="16.5" cy="17.3" r="2.2" />
     </>
   ),
   piling: (
     <>
-      <path d="M3 21h18" />
-      <path d="M8 21V4" />
-      <path d="M8 4h9" />
-      <path d="M17 4v6" />
-      <path d="M12 21v-9" />
-      <path d="M10 12h4" />
-      <path d="M12 12V8" />
+      <path d="M2 20.5h20" />
+      <rect x="4" y="16.4" width="7.6" height="2.8" rx="1.4" />
+      <path d="M6 16.4v-2.9h3.3v2.9" />
+      <path d="M13 4v12.4" />
+      <path d="M10.8 6.2v10.2" />
+      <path d="M10.8 8.7h2.2M10.8 11.5h2.2M10.8 14.3h2.2" />
+      <path d="M13 4h1.5" />
+      <path d="M13.8 4.4v9.4" />
     </>
   ),
   truck: (
     <>
-      <path d="M2 17h1V7h11v10" />
-      <path d="M14 10h4l3 3v4h-2" />
-      <path d="M14 17h-3" />
-      <circle cx="7" cy="18" r="1.8" />
-      <circle cx="17" cy="18" r="1.8" />
+      <path d="M2 20.5h20" />
+      <path d="M9.6 17.2V9h9.4v8.2" />
+      <path d="M9.6 17.2V11.3H6.3l-2 2.6v3.3" />
+      <path d="M4.4 14h3.4" />
+      <circle cx="6.6" cy="18.4" r="1.6" />
+      <circle cx="15.6" cy="18.4" r="1.6" />
     </>
   ),
   aerial: (
     <>
-      <path d="M4 21h8" />
-      <path d="M6 21v-3" />
-      <path d="M10 21v-3" />
-      <path d="M6 18l2-4 2 4" />
-      <path d="M8 14l4-6" />
-      <rect x="11" y="4" width="8" height="4" rx="0.5" />
+      <path d="M2 20.5h20" />
+      <rect x="6" y="16.4" width="8" height="2.2" rx="0.6" />
+      <circle cx="8" cy="19.1" r="0.9" />
+      <circle cx="12" cy="19.1" r="0.9" />
+      <path d="M7.4 16.4l5.2-3.5M12.6 16.4l-5.2-3.5" />
+      <path d="M7.4 12.9l5.2-3.5M12.6 12.9l-5.2-3.5" />
+      <path d="M6 9.2h8" />
+      <path d="M6 9.2V7M14 9.2V7M6 7h8" />
     </>
   ),
   wind: (
     <>
-      <path d="M12 22V12" />
-      <path d="M12 12l0-1" />
-      <path d="M12 11c0-3 1-5 4-6-2 3-2 5-1 7z" />
-      <path d="M12 11c-2.6-1.5-4.6-1.6-7-.4 3-1.6 4.4-3 5-6z" />
-      <path d="M12 11c1.4 2.7 3 4 6 4.6-3.4.5-5 0-7-1.4z" />
-      <path d="M9 22h6" />
+      <path d="M12 21v-8.6" />
+      <path d="M11.2 21h1.6" />
+      <circle cx="12" cy="11.7" r="1.1" />
+      <path d="M12 10.6c.5-2.8-.1-5-1.9-6.7-.4 2.7.3 4.9 1.9 6.7z" />
+      <path d="M13 12.2c2.4 1.4 4.7 1.3 6.8-.3-2.5-1.1-4.7-1-6.8.3z" />
+      <path d="M11 12.2c-2.1 2-3 4.2-2.6 6.7 2.2-1.6 3.1-3.7 2.6-6.7z" />
     </>
   ),
   // industry / value-prop
@@ -156,6 +165,22 @@ export function CategoryIcon({
   className?: string;
   strokeWidth?: number;
 }) {
+  // If a raster override is enabled for this machine (see src/data/iconAssets.ts),
+  // render the generated image instead of the built-in SVG.
+  if (rasterIcons[name]) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={`/icons/${name}.${rasterExt}`}
+        alt=""
+        width={size}
+        height={size}
+        aria-hidden
+        className={className}
+        style={{ objectFit: "contain", display: "inline-block" }}
+      />
+    );
+  }
   return (
     <svg {...base(size)} className={className} strokeWidth={strokeWidth ?? 1.6} aria-hidden>
       {categoryPaths[name] ?? categoryPaths.excavator}
