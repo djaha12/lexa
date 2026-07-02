@@ -2,8 +2,12 @@ import Link from "next/link";
 import { categories } from "@/data/products";
 import { CategoryIcon, Icon } from "@/components/Icons";
 import { accent } from "@/lib/theme";
+import { getLocale } from "@/i18n/server";
+import { t } from "@/i18n/strings";
+import { locCategory } from "@/i18n/content";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const locale = await getLocale();
   return (
     <section className="relative isolate overflow-hidden bg-ink text-white">
       <div
@@ -15,20 +19,15 @@ export default function NotFound() {
       />
       <div className="grain absolute inset-0 -z-10 opacity-50" aria-hidden />
       <div className="container-max flex min-h-[80vh] flex-col items-center justify-center py-32 text-center">
-        <p className="text-[7rem] font-extrabold leading-none tracking-tight text-white/90 md:text-[10rem]">
-          404
-        </p>
-        <h1 className="mt-2 text-2xl font-bold md:text-3xl">This page took a wrong turn</h1>
-        <p className="mt-3 max-w-md text-white/65">
-          The page you&apos;re looking for doesn&apos;t exist or has moved. Let&apos;s get you back on
-          track.
-        </p>
+        <p className="text-[7rem] font-extrabold leading-none tracking-tight text-white/90 md:text-[10rem]">404</p>
+        <h1 className="mt-2 text-2xl font-bold md:text-3xl">{t("nf.title", locale)}</h1>
+        <p className="mt-3 max-w-md text-white/65">{t("nf.body", locale)}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <Link href="/" className="btn btn-primary">
-            Back home <Icon.ArrowRight size={16} />
+            {t("cta.backHome", locale)} <Icon.ArrowRight size={16} />
           </Link>
           <Link href="/products" className="btn btn-ghost !text-white !border-white/25 hover:!bg-white/10">
-            Browse products
+            {t("cta.browseProducts", locale)}
           </Link>
         </div>
         <div className="mt-12 flex flex-wrap justify-center gap-2">
@@ -41,7 +40,7 @@ export default function NotFound() {
               <span style={{ color: accent(c.accent).from }}>
                 <CategoryIcon name={c.icon} size={15} />
               </span>
-              {c.shortName}
+              {locCategory(c, locale).shortName}
             </Link>
           ))}
         </div>

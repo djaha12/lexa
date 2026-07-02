@@ -3,20 +3,32 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { categories, subcategoryCounts } from "@/data/products";
-import { nav, languages } from "@/data/site";
+import { categories } from "@/data/products";
 import { CategoryIcon, Icon, Logo } from "./Icons";
 import { accent } from "@/lib/theme";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { t } from "@/i18n/strings";
+import { locCategory } from "@/i18n/content";
+import { locales, localeNames, type Locale } from "@/i18n/config";
+
+const NAV = [
+  { key: "products", href: "/products" },
+  { key: "solutions", href: "/solutions" },
+  { key: "service", href: "/service" },
+  { key: "about", href: "/about" },
+  { key: "news", href: "/news" },
+  { key: "contact", href: "/contact" },
+];
 
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
+  const { locale, setLocale } = useLocale();
   const [scrolled, setScrolled] = useState(false);
   const [mega, setMega] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [search, setSearch] = useState(false);
   const [q, setQ] = useState("");
-  const [lang, setLang] = useState("en");
   const [langOpen, setLangOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -28,7 +40,6 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // close everything on route change
   useEffect(() => {
     setMega(false);
     setMobile(false);
@@ -79,50 +90,42 @@ export function Header() {
         }`}
       >
         {/* utility bar */}
-        <div
-          className={`hidden lg:block border-b transition-colors ${
-            solid ? "border-line/70" : "border-white/15"
-          }`}
-        >
+        <div className={`hidden lg:block border-b transition-colors ${solid ? "border-line/70" : "border-white/15"}`}>
           <div className="container-max flex h-9 items-center justify-between text-[12.5px]">
             <div className={`flex items-center gap-5 ${solid ? "text-steel" : "text-white/80"}`}>
-              <span className="font-medium">{`"Quality Changes the World"`}</span>
+              <span className="font-medium">{t("brand.slogan", locale)}</span>
             </div>
             <div className={`flex items-center gap-5 ${solid ? "text-steel" : "text-white/80"}`}>
               <Link href="/service" className="link-underline">
-                After-sales
+                {t("header.afterSales", locale)}
               </Link>
               <Link href="/about" className="link-underline">
-                Investors
+                {t("header.investors", locale)}
               </Link>
               <a href="tel:+861234567890" className="inline-flex items-center gap-1.5 link-underline">
                 <Icon.Phone size={14} /> 400-8866-318
               </a>
-              {/* language */}
               <div className="relative">
-                <button
-                  onClick={() => setLangOpen((v) => !v)}
-                  className="inline-flex items-center gap-1.5 font-medium"
-                >
+                <button onClick={() => setLangOpen((v) => !v)} className="inline-flex items-center gap-1.5 font-medium">
                   <Icon.Globe size={14} />
-                  {languages.find((l) => l.code === lang)?.label}
+                  {localeNames[locale]}
                   <Icon.ChevronDown size={13} />
                 </button>
                 {langOpen && (
                   <div className="absolute right-0 top-7 z-50 w-40 overflow-hidden rounded-xl border border-line bg-white py-1 shadow-xl">
-                    {languages.map((l) => (
+                    {locales.map((l) => (
                       <button
-                        key={l.code}
+                        key={l}
                         onClick={() => {
-                          setLang(l.code);
+                          setLocale(l as Locale);
                           setLangOpen(false);
                         }}
                         className={`flex w-full items-center justify-between px-4 py-2 text-left text-sm text-ink hover:bg-paper ${
-                          lang === l.code ? "font-semibold text-brand" : ""
+                          locale === l ? "font-semibold text-brand" : ""
                         }`}
                       >
-                        {l.label}
-                        {lang === l.code && <Icon.Check size={14} />}
+                        {localeNames[l]}
+                        {locale === l && <Icon.Check size={14} />}
                       </button>
                     ))}
                   </div>
@@ -139,7 +142,7 @@ export function Header() {
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
-            {nav.map((item) => {
+            {NAV.map((item) => {
               const isProducts = item.href === "/products";
               const active = pathname === item.href || pathname.startsWith(item.href + "/");
               return (
@@ -151,15 +154,13 @@ export function Header() {
                   <Link
                     href={item.href}
                     className={`relative inline-flex items-center gap-1 rounded-lg px-3.5 py-2 text-[15px] font-medium transition-colors ${
-                      solid
-                        ? active
-                          ? "text-brand"
-                          : "text-ink hover:text-brand"
-                        : "text-white/90 hover:text-white"
+                      solid ? (active ? "text-brand" : "text-ink hover:text-brand") : "text-white/90 hover:text-white"
                     }`}
                   >
-                    {item.label}
-                    {isProducts && <Icon.ChevronDown size={15} className={mega ? "rotate-180 transition-transform" : "transition-transform"} />}
+                    {t(`nav.${item.key}`, locale)}
+                    {isProducts && (
+                      <Icon.ChevronDown size={15} className={mega ? "rotate-180 transition-transform" : "transition-transform"} />
+                    )}
                   </Link>
                 </div>
               );
@@ -177,7 +178,7 @@ export function Header() {
               <Icon.Search size={19} />
             </button>
             <Link href="/contact" className="btn btn-primary hidden h-10 !px-5 !py-0 text-sm sm:inline-flex">
-              Get a quote
+              {t("cta.getQuote", locale)}
             </Link>
             <button
               onClick={() => setMobile(true)}
@@ -200,48 +201,40 @@ export function Header() {
           >
             <div className="container-max grid grid-cols-[1fr_320px] gap-8 py-8">
               <div className="grid grid-cols-3 gap-x-6 gap-y-1">
-                {categories.map((c) => (
-                  <Link
-                    key={c.slug}
-                    href={`/products/${c.slug}`}
-                    className="group flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-paper"
-                  >
-                    <span
-                      className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg"
-                      style={{ background: accent(c.accent).tint, color: accent(c.accent).ink }}
+                {categories.map((c) => {
+                  const lc = locCategory(c, locale);
+                  return (
+                    <Link
+                      key={c.slug}
+                      href={`/products/${c.slug}`}
+                      className="group flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-paper"
                     >
-                      <CategoryIcon name={c.icon} size={20} />
-                    </span>
-                    <span>
-                      <span className="flex items-center gap-1 text-[14.5px] font-semibold text-ink group-hover:text-brand">
-                        {c.name}
+                      <span
+                        className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg"
+                        style={{ background: accent(c.accent).tint, color: accent(c.accent).ink }}
+                      >
+                        <CategoryIcon name={c.icon} size={20} />
                       </span>
-                      <span className="mt-0.5 block text-[12.5px] leading-snug text-steel">
-                        {c.tagline}
+                      <span>
+                        <span className="flex items-center gap-1 text-[14.5px] font-semibold text-ink group-hover:text-brand">
+                          {lc.name}
+                        </span>
+                        <span className="mt-0.5 block text-[12.5px] leading-snug text-steel">{lc.tagline}</span>
                       </span>
-                    </span>
-                  </Link>
-                ))}
+                    </Link>
+                  );
+                })}
               </div>
               <div className="rounded-2xl bg-ink p-6 text-white">
-                <p className="eyebrow !text-brand-soft">Explore the range</p>
-                <h4 className="mt-2 text-xl font-bold">Find the right machine</h4>
-                <p className="mt-2 text-sm text-white/70">
-                  Browse the complete catalogue, compare specifications and request a tailored quote
-                  from your local SANY team.
-                </p>
-                <Link
-                  href="/products"
-                  className="btn btn-white mt-5 w-full !py-3 text-sm"
-                >
-                  All products
+                <p className="eyebrow !text-brand-soft">{t("header.megaEyebrow", locale)}</p>
+                <h4 className="mt-2 text-xl font-bold">{t("header.megaTitle", locale)}</h4>
+                <p className="mt-2 text-sm text-white/70">{t("header.megaDesc", locale)}</p>
+                <Link href="/products" className="btn btn-white mt-5 w-full !py-3 text-sm">
+                  {t("cta.allProducts", locale)}
                   <Icon.ArrowRight size={16} />
                 </Link>
-                <Link
-                  href="/contact"
-                  className="mt-3 flex items-center justify-center gap-1.5 text-sm font-medium text-white/80 hover:text-white"
-                >
-                  Talk to an expert <Icon.ArrowUpRight size={14} />
+                <Link href="/contact" className="mt-3 flex items-center justify-center gap-1.5 text-sm font-medium text-white/80 hover:text-white">
+                  {t("cta.talkExpert", locale)} <Icon.ArrowUpRight size={14} />
                 </Link>
               </div>
             </div>
@@ -261,7 +254,7 @@ export function Header() {
                   ref={searchRef}
                   value={q}
                   onChange={(e) => setQ(e.target.value)}
-                  placeholder="Search excavators, cranes, pumps, models…"
+                  placeholder={t("header.searchPlaceholder", locale)}
                   className="h-16 w-full bg-transparent text-lg outline-none placeholder:text-mist"
                 />
                 <button type="button" onClick={() => setSearch(false)} className="text-steel hover:text-ink">
@@ -269,9 +262,7 @@ export function Header() {
                 </button>
               </div>
               <div className="border-t border-line bg-paper px-5 py-3">
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-mist">
-                  Popular categories
-                </p>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-mist">{t("header.popular", locale)}</p>
                 <div className="flex flex-wrap gap-2">
                   {categories.slice(0, 6).map((c) => (
                     <Link
@@ -279,7 +270,7 @@ export function Header() {
                       href={`/products/${c.slug}`}
                       className="rounded-full border border-line bg-white px-3 py-1.5 text-sm text-ink hover:border-brand hover:text-brand"
                     >
-                      {c.name}
+                      {locCategory(c, locale).name}
                     </Link>
                   ))}
                 </div>
@@ -301,9 +292,7 @@ export function Header() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto px-4 py-4">
-              <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-mist">
-                Products
-              </p>
+              <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-mist">{t("nav.products", locale)}</p>
               <div className="mb-4 grid gap-0.5">
                 {categories.map((c) => (
                   <Link
@@ -317,27 +306,39 @@ export function Header() {
                     >
                       <CategoryIcon name={c.icon} size={18} />
                     </span>
-                    <span className="text-[15px] font-medium text-ink">{c.name}</span>
+                    <span className="text-[15px] font-medium text-ink">{locCategory(c, locale).name}</span>
                   </Link>
                 ))}
               </div>
               <div className="border-t border-line pt-3">
-                {nav
-                  .filter((n) => n.href !== "/products")
-                  .map((n) => (
-                    <Link
-                      key={n.href}
-                      href={n.href}
-                      className="block rounded-xl px-2 py-3 text-[15px] font-medium text-ink hover:bg-paper"
+                {NAV.filter((n) => n.href !== "/products").map((n) => (
+                  <Link key={n.href} href={n.href} className="block rounded-xl px-2 py-3 text-[15px] font-medium text-ink hover:bg-paper">
+                    {t(`nav.${n.key}`, locale)}
+                  </Link>
+                ))}
+              </div>
+              <div className="mt-3 border-t border-line pt-3">
+                <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-mist">
+                  <Icon.Globe size={13} className="mr-1 inline" />
+                </p>
+                <div className="flex gap-2 px-2">
+                  {locales.map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => setLocale(l as Locale)}
+                      className={`rounded-lg border px-3 py-1.5 text-sm ${
+                        locale === l ? "border-brand bg-brand-soft font-semibold text-brand" : "border-line text-ink"
+                      }`}
                     >
-                      {n.label}
-                    </Link>
+                      {localeNames[l]}
+                    </button>
                   ))}
+                </div>
               </div>
             </div>
             <div className="border-t border-line p-4">
               <Link href="/contact" className="btn btn-primary w-full">
-                Get a quote <Icon.ArrowRight size={16} />
+                {t("cta.getQuote", locale)} <Icon.ArrowRight size={16} />
               </Link>
             </div>
           </div>

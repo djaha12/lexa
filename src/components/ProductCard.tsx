@@ -4,8 +4,18 @@ import { getCategory } from "@/data/products";
 import { ProductVisual } from "./ProductVisual";
 import { Icon } from "./Icons";
 import { Badge } from "./ui";
+import type { Locale } from "@/i18n/config";
+import { locTagline, locSpecLabel, locUnit, locValue, locBadge } from "@/i18n/content";
 
-export function ProductCard({ model, compact = false }: { model: Model; compact?: boolean }) {
+export function ProductCard({
+  model,
+  locale,
+  compact = false,
+}: {
+  model: Model;
+  locale: Locale;
+  compact?: boolean;
+}) {
   const cat = getCategory(model.categorySlug);
   return (
     <Link
@@ -21,7 +31,7 @@ export function ProductCard({ model, compact = false }: { model: Model; compact?
         />
         {model.badges?.[0] && (
           <div className="absolute left-3 top-3">
-            <Badge>{model.badges[0]}</Badge>
+            <Badge>{locBadge(model.badges[0], locale)}</Badge>
           </div>
         )}
       </div>
@@ -33,16 +43,16 @@ export function ProductCard({ model, compact = false }: { model: Model; compact?
             className="text-mist transition-all group-hover:translate-x-0.5 group-hover:text-brand"
           />
         </h3>
-        <p className="mt-1 line-clamp-2 text-sm leading-snug text-steel">{model.tagline}</p>
+        <p className="mt-1 line-clamp-2 text-sm leading-snug text-steel">{locTagline(model, locale)}</p>
 
         {!compact && (
           <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 border-t border-line pt-4">
             {model.specs.slice(0, 2).map((s) => (
               <div key={s.label}>
-                <dt className="text-[11px] uppercase tracking-wide text-mist">{s.label}</dt>
+                <dt className="text-[11px] uppercase tracking-wide text-mist">{locSpecLabel(s.label, locale)}</dt>
                 <dd className="text-sm font-semibold text-ink">
-                  {s.value}
-                  {s.unit ? <span className="ml-0.5 text-xs font-normal text-steel">{s.unit}</span> : null}
+                  {locValue(s.value, locale)}
+                  {s.unit ? <span className="ml-0.5 text-xs font-normal text-steel">{locUnit(s.unit, locale)}</span> : null}
                 </dd>
               </div>
             ))}

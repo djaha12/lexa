@@ -5,8 +5,12 @@ import { useEffect, useState } from "react";
 import { categories } from "@/data/products";
 import { Icon, CategoryIcon } from "./Icons";
 import { accent } from "@/lib/theme";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { t } from "@/i18n/strings";
+import { locCategory } from "@/i18n/content";
 
 export function Hero() {
+  const { locale } = useLocale();
   const [i, setI] = useState(0);
   useEffect(() => {
     const t = setInterval(() => setI((v) => (v + 1) % categories.length), 2600);
@@ -37,40 +41,36 @@ export function Hero() {
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[12.5px] font-medium text-white/80 backdrop-blur">
             <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-            World-leading construction & industrial equipment
+            {t("hero.badge", locale)}
           </span>
 
           <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-[4.2rem]">
-            Machines that
+            {t("hero.titleTop", locale)}
             <br />
             <span className="relative inline-block">
               <span className="bg-linear-to-r from-brand to-[#ff5a67] bg-clip-text text-transparent">
-                move the world
+                {t("hero.titleAccent", locale)}
               </span>
             </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-            From 1.6-tonne mini excavators to 4 000-tonne crawler cranes and 86-metre boom pumps —
-            explore the complete SANY range, engineered for performance, efficiency and the lowest
-            total cost of ownership.
-          </p>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">{t("hero.subcopy", locale)}</p>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/products" className="btn btn-primary !px-6 !py-3.5 text-base">
-              Explore products <Icon.ArrowRight size={18} />
+              {t("hero.exploreProducts", locale)} <Icon.ArrowRight size={18} />
             </Link>
             <Link
               href="/contact"
               className="btn !px-6 !py-3.5 text-base text-white border border-white/25 hover:bg-white/10"
             >
-              <Icon.Play size={15} /> Get a quote
+              <Icon.Play size={15} /> {t("cta.getQuote", locale)}
             </Link>
           </div>
 
           {/* rotating category ticker */}
           <div className="mt-10 flex items-center gap-3 text-sm text-white/60">
-            <span className="text-white/40">Now viewing</span>
+            <span className="text-white/40">{t("hero.nowViewing", locale)}</span>
             <Link
               href={`/products/${active.slug}`}
               className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 font-medium text-white transition-colors hover:border-brand"
@@ -78,7 +78,7 @@ export function Hero() {
               <span style={{ color: accent(active.accent).from }}>
                 <CategoryIcon name={active.icon} size={16} />
               </span>
-              {active.name}
+              {locCategory(active, locale).name}
               <Icon.ArrowUpRight size={13} />
             </Link>
           </div>
@@ -105,7 +105,7 @@ export function Hero() {
                 >
                   <CategoryIcon name={c.icon} size={20} />
                 </span>
-                <p className="mt-6 text-sm font-semibold text-white">{c.shortName}</p>
+                <p className="mt-6 text-sm font-semibold text-white">{locCategory(c, locale).shortName}</p>
                 <Icon.ArrowUpRight
                   size={15}
                   className="absolute right-3 top-3 text-white/30 transition-colors group-hover:text-brand"

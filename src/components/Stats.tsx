@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { stats } from "@/data/site";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { locStatLabel } from "@/i18n/site";
 
 function useCountUp(target: number, run: boolean, ms = 1400) {
   const [n, setN] = useState(0);
@@ -38,6 +40,7 @@ function StatItem({ value, suffix, label, run }: { value: string; suffix?: strin
 }
 
 export function Stats() {
+  const { locale } = useLocale();
   const ref = useRef<HTMLDivElement>(null);
   const [run, setRun] = useState(false);
   useEffect(() => {
@@ -57,7 +60,7 @@ export function Stats() {
   return (
     <div ref={ref} className="grid grid-cols-2 gap-8 md:grid-cols-4">
       {stats.map((s) => (
-        <StatItem key={s.label} {...s} run={run} />
+        <StatItem key={s.label} {...s} label={locStatLabel(s.label, locale)} run={run} />
       ))}
     </div>
   );

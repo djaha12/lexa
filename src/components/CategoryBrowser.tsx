@@ -4,16 +4,20 @@ import { useMemo, useState } from "react";
 import type { Model, Subcategory } from "@/data/products";
 import { ProductCard } from "./ProductCard";
 import { Icon } from "./Icons";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { t } from "@/i18n/strings";
+import { locSubcategory } from "@/i18n/content";
 
 export function CategoryBrowser({
+  categorySlug,
   models,
   subcategories,
-  icon,
 }: {
+  categorySlug: string;
   models: Model[];
   subcategories: (Subcategory & { count: number })[];
-  icon: string;
 }) {
+  const { locale } = useLocale();
   const [active, setActive] = useState<string>("all");
   const [sort, setSort] = useState<"default" | "az">("default");
 
@@ -27,13 +31,13 @@ export function CategoryBrowser({
     <div>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-wrap gap-2">
-          <FilterChip label={`All (${models.length})`} active={active === "all"} onClick={() => setActive("all")} />
+          <FilterChip label={`${t("browser.all", locale)} (${models.length})`} active={active === "all"} onClick={() => setActive("all")} />
           {subcategories
             .filter((s) => s.count > 0)
             .map((s) => (
               <FilterChip
                 key={s.slug}
-                label={`${s.name} (${s.count})`}
+                label={`${locSubcategory(categorySlug, s, locale).name} (${s.count})`}
                 active={active === s.slug}
                 onClick={() => setActive(s.slug)}
               />
@@ -50,21 +54,21 @@ export function CategoryBrowser({
             onChange={(e) => setSort(e.target.value as "default" | "az")}
             className="rounded-lg border border-line bg-white px-3 py-2 font-medium text-ink outline-none focus:border-brand"
           >
-            <option value="default">Recommended</option>
-            <option value="az">Name A–Z</option>
+            <option value="default">{t("browser.sort.recommended", locale)}</option>
+            <option value="az">{t("browser.sort.az", locale)}</option>
           </select>
         </div>
       </div>
 
       <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((m) => (
-          <ProductCard key={m.slug} model={m} />
+          <ProductCard key={m.slug} model={m} locale={locale} />
         ))}
       </div>
 
       {filtered.length === 0 && (
         <p className="mt-10 rounded-2xl border border-dashed border-line bg-paper p-10 text-center text-steel">
-          No models in this line yet — contact us for the latest availability.
+          {t("browser.empty", locale)}
         </p>
       )}
     </div>
@@ -76,9 +80,7 @@ function FilterChip({ label, active, onClick }: { label: string; active: boolean
     <button
       onClick={onClick}
       className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-        active
-          ? "bg-ink text-white"
-          : "border border-line bg-white text-ink hover:border-ink"
+        active ? "bg-ink text-white" : "border border-line bg-white text-ink hover:border-ink"
       }`}
     >
       {label}

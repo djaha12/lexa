@@ -7,10 +7,14 @@ import { models, categories, getCategory } from "@/data/products";
 import { ProductCard } from "./ProductCard";
 import { CategoryIcon, Icon } from "./Icons";
 import { accent } from "@/lib/theme";
+import { useLocale } from "@/i18n/LocaleProvider";
+import { t } from "@/i18n/strings";
+import { locCategory, locTagline, locApplications } from "@/i18n/content";
 
 export function SearchResults() {
   const params = useSearchParams();
   const router = useRouter();
+  const { locale } = useLocale();
   const initial = params.get("q") ?? "";
   const [q, setQ] = useState(initial);
 
@@ -21,14 +25,16 @@ export function SearchResults() {
   const matchedCategories = useMemo(
     () =>
       query
-        ? categories.filter(
-            (c) =>
-              c.name.toLowerCase().includes(query) ||
-              c.tagline.toLowerCase().includes(query) ||
-              c.subcategories.some((s) => s.name.toLowerCase().includes(query))
-          )
+        ? categories.filter((c) => {
+            const lc = locCategory(c, locale);
+            return (
+              lc.name.toLowerCase().includes(query) ||
+              lc.tagline.toLowerCase().includes(query) ||
+              c.name.toLowerCase().includes(query)
+            );
+          })
         : [],
-    [query]
+    [query, locale]
   );
 
   const matchedModels = useMemo(() => {
@@ -38,22 +44,26 @@ export function SearchResults() {
       const hay = [
         m.name,
         m.tagline,
+        locTagline(m, locale),
         m.description,
         cat?.name ?? "",
-        m.subcategorySlug,
+        cat ? locCategory(cat, locale).name : "",
         ...m.applications,
+        ...locApplications(m, locale),
         ...(m.badges ?? []),
       ]
         .join(" ")
         .toLowerCase();
       return hay.includes(query);
     });
-  }, [query]);
+  }, [query, locale]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     router.replace(`/search?q=${encodeURIComponent(q.trim())}`);
   };
+
+  const total = matchedModels.length + matchedCategories.length;
 
   return (
     <div>
@@ -63,7 +73,7 @@ export function SearchResults() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           autoFocus
-          placeholder="Search excavators, cranes, pumps, models…"
+          placeholder={t("header.searchPlaceholder", locale)}
           className="h-14 w-full bg-transparent text-lg outline-none placeholder:text-mist"
         />
         {q && (
@@ -75,21 +85,17 @@ export function SearchResults() {
 
       {!query && (
         <div className="mt-8">
-          <p className="text-sm font-semibold uppercase tracking-wide text-mist">Browse categories</p>
+          <p className="text-sm font-semibold uppercase tracking-wide text-mist">{t("search.browse", locale)}</p>
           <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((c) => (
-              <Link
-                key={c.slug}
-                href={`/products/${c.slug}`}
-                className="card card-hover flex items-center gap-3 p-4"
-              >
+              <Link key={c.slug} href={`/products/${c.slug}`} className="card card-hover flex items-center gap-3 p-4">
                 <span
                   className="grid h-10 w-10 place-items-center rounded-lg"
                   style={{ background: accent(c.accent).tint, color: accent(c.accent).ink }}
                 >
                   <CategoryIcon name={c.icon} size={20} />
                 </span>
-                <span className="font-semibold text-ink">{c.name}</span>
+                <span className="font-semibold text-ink">{locCategory(c, locale).name}</span>
               </Link>
             ))}
           </div>
@@ -99,9 +105,8 @@ export function SearchResults() {
       {query && (
         <div className="mt-8">
           <p className="text-steel">
-            {matchedModels.length + matchedCategories.length} result
-            {matchedModels.length + matchedCategories.length === 1 ? "" : "s"} for{" "}
-            <span className="font-semibold text-ink">“{q}”</span>
+            {total} {total === 1 ? t("search.result", locale) : t("search.results", locale)}{" "}
+            <span className="font-semibold text-ink">«{q}»</span>
           </p>
 
           {matchedCategories.length > 0 && (
@@ -112,7 +117,7 @@ export function SearchResults() {
                   href={`/products/${c.slug}`}
                   className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-medium text-ink hover:border-brand hover:text-brand"
                 >
-                  <CategoryIcon name={c.icon} size={16} /> {c.name}
+                  <CategoryIcon name={c.icon} size={16} /> {locCategory(c, locale).name}
                 </Link>
               ))}
             </div>
@@ -121,17 +126,17 @@ export function SearchResults() {
           {matchedModels.length > 0 ? (
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {matchedModels.map((m) => (
-                <ProductCard key={m.slug} model={m} />
+                <ProductCard key={m.slug} model={m} locale={locale} />
               ))}
             </div>
           ) : (
             matchedCategories.length === 0 && (
               <div className="mt-10 rounded-2xl border border-dashed border-line bg-white p-12 text-center">
-                <p className="text-lg font-semibold text-ink">No matches found</p>
+                <p className="text-lg font-semibold text-ink">{t("search.noMatch", locale)}</p>
                 <p className="mt-2 text-steel">
-                  Try a different keyword, or{" "}
+                  {t("search.noMatchBody", locale)}{" "}
                   <Link href="/products" className="font-medium text-brand hover:underline">
-                    browse all products
+                    {t("search.browseAll", locale)}
                   </Link>
                   .
                 </p>

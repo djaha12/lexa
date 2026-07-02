@@ -9,8 +9,13 @@ import { CategoryIcon, Icon } from "@/components/Icons";
 import { categories, featuredModels, modelsInCategory } from "@/data/products";
 import { valueProps, industries, news, regions } from "@/data/site";
 import { accent } from "@/lib/theme";
+import { getLocale } from "@/i18n/server";
+import { t } from "@/i18n/strings";
+import { locCategory } from "@/i18n/content";
+import { locValueProp, locIndustry, locNews, locRegion } from "@/i18n/site";
 
-export default function Home() {
+export default async function Home() {
+  const locale = await getLocale();
   const featured = featuredModels();
   return (
     <>
@@ -28,30 +33,23 @@ export default function Home() {
         <div className="container-max">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading
-              eyebrow="The full range"
-              title="Every machine your project needs"
-              intro="Ten equipment families, hundreds of models — one trusted brand. Explore the complete SANY assortment."
+              eyebrow={t("home.range.eyebrow", locale)}
+              title={t("home.range.title", locale)}
+              intro={t("home.range.intro", locale)}
             />
             <ArrowLink href="/products" className="mb-2">
-              View all products
+              {t("home.range.viewAll", locale)}
             </ArrowLink>
           </div>
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((c, idx) => {
               const count = modelsInCategory(c.slug).length;
+              const lc = locCategory(c, locale);
               return (
                 <Reveal key={c.slug} delay={(idx % 3) * 80}>
-                  <Link
-                    href={`/products/${c.slug}`}
-                    className="card card-hover group flex h-full flex-col overflow-hidden"
-                  >
-                    <ProductVisual
-                      accentKey={c.accent}
-                      icon={c.icon}
-                      className="aspect-[16/9]"
-                      rounded="rounded-none"
-                    />
+                  <Link href={`/products/${c.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
+                    <ProductVisual accentKey={c.accent} icon={c.icon} className="aspect-[16/9]" rounded="rounded-none" />
                     <div className="flex flex-1 flex-col p-6">
                       <div className="flex items-center gap-3">
                         <span
@@ -60,17 +58,14 @@ export default function Home() {
                         >
                           <CategoryIcon name={c.icon} size={20} />
                         </span>
-                        <h3 className="text-xl font-bold text-ink group-hover:text-brand">{c.name}</h3>
+                        <h3 className="text-xl font-bold text-ink group-hover:text-brand">{lc.name}</h3>
                       </div>
-                      <p className="mt-3 flex-1 text-sm leading-relaxed text-steel">{c.tagline}</p>
+                      <p className="mt-3 flex-1 text-sm leading-relaxed text-steel">{lc.tagline}</p>
                       <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
                         <span className="text-xs font-medium text-mist">
-                          {count} models · {c.subcategories.length} lines
+                          {count} {t("common.models", locale)} · {c.subcategories.length} {t("common.lines", locale)}
                         </span>
-                        <Icon.ArrowRight
-                          size={18}
-                          className="text-brand transition-transform group-hover:translate-x-1"
-                        />
+                        <Icon.ArrowRight size={18} className="text-brand transition-transform group-hover:translate-x-1" />
                       </div>
                     </div>
                   </Link>
@@ -85,14 +80,14 @@ export default function Home() {
       <section className="section-pad bg-white">
         <div className="container-max">
           <SectionHeading
-            eyebrow="Flagship & best-sellers"
-            title="Featured equipment"
-            intro="Proven performers trusted on jobsites in more than 180 countries."
+            eyebrow={t("home.featured.eyebrow", locale)}
+            title={t("home.featured.title", locale)}
+            intro={t("home.featured.intro", locale)}
           />
           <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {featured.slice(0, 8).map((m, idx) => (
               <Reveal key={m.slug} delay={(idx % 4) * 70}>
-                <ProductCard model={m} compact />
+                <ProductCard model={m} locale={locale} compact />
               </Reveal>
             ))}
           </div>
@@ -104,31 +99,34 @@ export default function Home() {
         <div className="container-max grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal>
             <SectionHeading
-              eyebrow="Why SANY"
-              title="Engineered advantage, end to end"
-              intro="From lighthouse factories to a service network spanning 180+ countries, everything is built to keep your operation productive."
+              eyebrow={t("home.why.eyebrow", locale)}
+              title={t("home.why.title", locale)}
+              intro={t("home.why.intro", locale)}
             />
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/about" className="btn btn-dark">
-                About SANY <Icon.ArrowRight size={16} />
+                {t("home.why.about", locale)} <Icon.ArrowRight size={16} />
               </Link>
               <Link href="/service" className="btn btn-ghost">
-                Service & support
+                {t("home.why.service", locale)}
               </Link>
             </div>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2">
-            {valueProps.map((v, idx) => (
-              <Reveal key={v.title} delay={idx * 70}>
-                <div className="card h-full p-6">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand">
-                    <CategoryIcon name={v.icon} size={22} />
-                  </span>
-                  <h3 className="mt-4 text-lg font-bold text-ink">{v.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-steel">{v.body}</p>
-                </div>
-              </Reveal>
-            ))}
+            {valueProps.map((v, idx) => {
+              const lv = locValueProp(v.icon, locale, { title: v.title, body: v.body });
+              return (
+                <Reveal key={v.title} delay={idx * 70}>
+                  <div className="card h-full p-6">
+                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand">
+                      <CategoryIcon name={v.icon} size={22} />
+                    </span>
+                    <h3 className="mt-4 text-lg font-bold text-ink">{lv.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-steel">{lv.body}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -145,43 +143,34 @@ export default function Home() {
         <div className="grain absolute inset-0 -z-10 opacity-50" aria-hidden />
         <div className="container-max grid gap-12 py-20 md:py-28 lg:grid-cols-2 lg:items-center">
           <Reveal>
-            <span className="eyebrow !text-emerald-300">New energy</span>
-            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-[2.6rem]">
-              Powering the zero-emission jobsite
-            </h2>
-            <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/70">
-              Battery-electric excavators, battery-swap heavy trucks, electric mining haulers and
-              grid-scale storage — SANY is electrifying every corner of heavy industry.
-            </p>
+            <span className="eyebrow !text-emerald-300">{t("home.energy.eyebrow", locale)}</span>
+            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-[2.6rem]">{t("home.energy.title", locale)}</h2>
+            <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/70">{t("home.energy.intro", locale)}</p>
             <ul className="mt-6 space-y-3">
-              {[
-                "Battery-swap refuels trucks in minutes",
-                "Lower energy cost per hour than diesel",
-                "Zero local emissions for urban & indoor work",
-              ].map((t) => (
-                <li key={t} className="flex items-center gap-3 text-white/80">
+              {["home.energy.b1", "home.energy.b2", "home.energy.b3"].map((k) => (
+                <li key={k} className="flex items-center gap-3 text-white/80">
                   <span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-500/20 text-emerald-300">
                     <Icon.Check size={14} />
                   </span>
-                  {t}
+                  {t(k, locale)}
                 </li>
               ))}
             </ul>
             <Link href="/solutions#new-energy" className="btn btn-primary mt-8">
-              Discover new energy <Icon.ArrowRight size={16} />
+              {t("home.energy.cta", locale)} <Icon.ArrowRight size={16} />
             </Link>
           </Reveal>
           <Reveal delay={120}>
             <div className="grid grid-cols-2 gap-4">
               {[
-                { k: "422 kWh", v: "Battery capacity" },
-                { k: "0 g", v: "Tailpipe CO₂" },
-                { k: "24/7", v: "Battery-swap uptime" },
-                { k: "15 MW", v: "Offshore turbine" },
+                { k: "422 kWh", v: "home.energy.s1" },
+                { k: "0 g", v: "home.energy.s2" },
+                { k: "24/7", v: "home.energy.s3" },
+                { k: "15 MW", v: "home.energy.s4" },
               ].map((s) => (
                 <div key={s.v} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
                   <div className="text-3xl font-extrabold text-emerald-300">{s.k}</div>
-                  <p className="mt-1 text-sm text-white/60">{s.v}</p>
+                  <p className="mt-1 text-sm text-white/60">{t(s.v, locale)}</p>
                 </div>
               ))}
             </div>
@@ -193,28 +182,28 @@ export default function Home() {
       <section className="section-pad bg-white">
         <div className="container-max">
           <SectionHeading
-            eyebrow="Solutions by industry"
-            title="Built for how you work"
-            intro="Tailored equipment packages and expertise for every sector."
+            eyebrow={t("home.ind.eyebrow", locale)}
+            title={t("home.ind.title", locale)}
+            intro={t("home.ind.intro", locale)}
             align="center"
           />
           <div className="mx-auto mt-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {industries.map((ind, idx) => (
-              <Reveal key={ind.name} delay={(idx % 3) * 70}>
-                <Link
-                  href="/solutions"
-                  className="card card-hover group flex items-center gap-4 p-5"
-                >
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-paper text-ink transition-colors group-hover:bg-brand group-hover:text-white">
-                    <CategoryIcon name={ind.icon} size={24} />
-                  </span>
-                  <div>
-                    <h3 className="font-bold text-ink group-hover:text-brand">{ind.name}</h3>
-                    <p className="text-sm text-steel">{ind.blurb}</p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+            {industries.map((ind, idx) => {
+              const li = locIndustry(ind.name, locale, ind.blurb);
+              return (
+                <Reveal key={ind.name} delay={(idx % 3) * 70}>
+                  <Link href="/solutions" className="card card-hover group flex items-center gap-4 p-5">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-paper text-ink transition-colors group-hover:bg-brand group-hover:text-white">
+                      <CategoryIcon name={ind.icon} size={24} />
+                    </span>
+                    <div>
+                      <h3 className="font-bold text-ink group-hover:text-brand">{li.name}</h3>
+                      <p className="text-sm text-steel">{li.blurb}</p>
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -223,35 +212,30 @@ export default function Home() {
       <section className="section-pad bg-paper">
         <div className="container-max">
           <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow="Newsroom" title="Latest from SANY" />
+            <SectionHeading eyebrow={t("home.news.eyebrow", locale)} title={t("home.news.title", locale)} />
             <ArrowLink href="/news" className="mb-2">
-              All news
+              {t("home.news.all", locale)}
             </ArrowLink>
           </div>
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {news.map((n, idx) => (
-              <Reveal key={n.slug} delay={(idx % 4) * 70}>
-                <Link href={`/news/${n.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
-                  <ProductVisual
-                    accentKey={n.accent}
-                    icon="chip"
-                    className="aspect-[16/10]"
-                    rounded="rounded-none"
-                    intensity="soft"
-                  />
-                  <div className="flex flex-1 flex-col p-5">
-                    <div className="flex items-center gap-2 text-xs text-mist">
-                      <span className="font-semibold uppercase tracking-wide text-brand">{n.tag}</span>
-                      <span>·</span>
-                      <time>{new Date(n.date).toLocaleDateString("en", { month: "short", day: "numeric", year: "numeric" })}</time>
+            {news.map((n, idx) => {
+              const ln = locNews(n.slug, locale, { title: n.title, excerpt: n.excerpt, tag: n.tag });
+              return (
+                <Reveal key={n.slug} delay={(idx % 4) * 70}>
+                  <Link href={`/news/${n.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
+                    <ProductVisual accentKey={n.accent} icon="chip" className="aspect-[16/10]" rounded="rounded-none" intensity="soft" />
+                    <div className="flex flex-1 flex-col p-5">
+                      <div className="flex items-center gap-2 text-xs text-mist">
+                        <span className="font-semibold uppercase tracking-wide text-brand">{ln.tag}</span>
+                        <span>·</span>
+                        <time>{new Date(n.date).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" })}</time>
+                      </div>
+                      <h3 className="mt-2 flex-1 text-[15px] font-bold leading-snug text-ink group-hover:text-brand">{ln.title}</h3>
                     </div>
-                    <h3 className="mt-2 flex-1 text-[15px] font-bold leading-snug text-ink group-hover:text-brand">
-                      {n.title}
-                    </h3>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -261,20 +245,23 @@ export default function Home() {
         <div className="container-max grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal>
             <SectionHeading
-              eyebrow="Global presence"
-              title="Local partner, worldwide"
-              intro="With manufacturing bases on multiple continents and dealers across 180+ countries, SANY support is always close by."
+              eyebrow={t("home.global.eyebrow", locale)}
+              title={t("home.global.title", locale)}
+              intro={t("home.global.intro", locale)}
             />
             <div className="mt-8 grid grid-cols-2 gap-3">
-              {regions.map((r) => (
-                <div key={r.name} className="rounded-xl border border-line p-4">
-                  <div className="flex items-center gap-2 font-semibold text-ink">
-                    <Icon.Pin size={16} className="text-brand" />
-                    {r.name}
+              {regions.map((r) => {
+                const lr = locRegion(r.name, locale, r.note);
+                return (
+                  <div key={r.name} className="rounded-xl border border-line p-4">
+                    <div className="flex items-center gap-2 font-semibold text-ink">
+                      <Icon.Pin size={16} className="text-brand" />
+                      {lr.name}
+                    </div>
+                    <p className="mt-1 text-sm text-steel">{lr.note}</p>
                   </div>
-                  <p className="mt-1 text-sm text-steel">{r.note}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </Reveal>
           <Reveal delay={120}>
@@ -283,24 +270,21 @@ export default function Home() {
               <div className="relative">
                 <div className="grid grid-cols-3 gap-6">
                   {[
-                    { k: "180+", v: "Countries" },
-                    { k: "30+", v: "Factories" },
-                    { k: "100k+", v: "Machines / yr" },
+                    { k: "180+", v: "home.global.countries" },
+                    { k: "30+", v: "home.global.factories" },
+                    { k: "100k+", v: "home.global.machinesYr" },
                   ].map((s) => (
                     <div key={s.v}>
                       <div className="text-3xl font-extrabold text-brand">{s.k}</div>
-                      <p className="mt-1 text-xs text-white/60">{s.v}</p>
+                      <p className="mt-1 text-xs text-white/60">{t(s.v, locale)}</p>
                     </div>
                   ))}
                 </div>
                 <div className="mt-8 h-px bg-white/10" />
-                <p className="mt-6 text-white/70">
-                  “SANY equipment keeps our operations moving — with service and parts support we can
-                  count on, wherever the work takes us.”
-                </p>
-                <p className="mt-3 text-sm font-semibold">— Global infrastructure customer</p>
+                <p className="mt-6 text-white/70">{t("home.global.quote", locale)}</p>
+                <p className="mt-3 text-sm font-semibold">{t("home.global.quoteAuthor", locale)}</p>
                 <Link href="/contact" className="btn btn-white mt-8">
-                  Find your local team <Icon.ArrowRight size={16} />
+                  {t("home.global.findTeam", locale)} <Icon.ArrowRight size={16} />
                 </Link>
               </div>
             </div>
