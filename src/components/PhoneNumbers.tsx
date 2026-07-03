@@ -47,8 +47,8 @@ export function PhoneNumbers({
         ))}
       </ul>
       {withNote && (
-        <p className={`mt-2 flex items-center gap-1.5 text-xs ${dark ? "text-white/55" : "text-mist"}`}>
-          <span style={{ color: "#25D366" }}>
+        <p className={`mt-2 flex items-start gap-1.5 text-xs ${dark ? "text-white/55" : "text-mist"}`}>
+          <span className="mt-0.5 shrink-0" style={{ color: "#25D366" }}>
             <Icon.Whatsapp size={13} />
           </span>
           {t("contact.phoneNote", locale)}

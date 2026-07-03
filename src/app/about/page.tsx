@@ -128,7 +128,7 @@ export default async function AboutPage() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <div className="glass-dark glass-sheen relative overflow-hidden rounded-3xl bg-ink/80 p-10 text-white">
+            <div className="glass-dark glass-sheen relative overflow-hidden rounded-3xl bg-ink/80 p-6 text-white sm:p-8 lg:p-10">
               <div className="relative">
                 <h3 className="text-xl font-bold">{tx(dealer.officeLabel, locale)} · {tx(dealer.city, locale)}</h3>
                 <div className="mt-5 space-y-4 text-white/80">

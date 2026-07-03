@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { categories, models, modelsInCategory } from "@/data/products";
+import { categories, modelsInCategory } from "@/data/products";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { ProductVisual } from "@/components/ProductVisual";
@@ -9,7 +9,7 @@ import { CatalogCTA } from "@/components/CatalogCTA";
 import { accent } from "@/lib/theme";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
-import { locCategory, locSubcategory, locTagline } from "@/i18n/content";
+import { locCategory, locTagline } from "@/i18n/content";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -25,8 +25,7 @@ export default async function ProductsPage() {
         eyebrow={t("products.eyebrow", locale)}
         title={t("products.title", locale)}
         intro={t("products.intro", locale)}
-        breadcrumbs={[{ label: "SANY", href: "/" }, { label: t("nav.products", locale) }]}
-        stat={`${models.length} ${t("common.models", locale)} · ${categories.length} ${t("common.categories", locale)}`}
+        breadcrumbs={[{ label: "SANY Кыргызстан", href: "/" }, { label: t("nav.products", locale) }]}
       />
 
       {/* quick category chips */}
@@ -73,18 +72,6 @@ export default async function ProductsPage() {
                     </div>
                     <h2 className="mt-5 text-2xl font-bold text-ink md:text-3xl">{lc.name}</h2>
                     <p className="mt-3 text-sm leading-relaxed text-steel">{lc.description}</p>
-                    <ul className="mt-5 flex flex-wrap gap-2">
-                      {c.subcategories.map((s) => (
-                        <li key={s.slug}>
-                          <Link
-                            href={`/products/${c.slug}#${s.slug}`}
-                            className="rounded-full bg-white px-3 py-1.5 text-xs font-medium text-ink ring-1 ring-line hover:ring-brand"
-                          >
-                            {locSubcategory(c.slug, s, locale).name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
                     <Link href={`/products/${c.slug}`} className="btn btn-dark mt-6 !py-2.5 text-sm">
                       {t("cat.exploreCta", locale)} {lc.shortName} <Icon.ArrowRight size={16} />
                     </Link>

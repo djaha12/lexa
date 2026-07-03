@@ -63,7 +63,7 @@ export default async function ModelPage({ params }: { params: Promise<{ category
             />
           </div>
 
-          <div className="grid gap-10 pt-8 pb-12 lg:grid-cols-2 lg:items-center">
+          <div className="grid grid-cols-1 gap-10 pt-8 pb-12 lg:grid-cols-2 lg:items-center">
             <div>
               <ProductVisual accentKey={m.accent} icon={cat.icon} className="aspect-[4/3]" rounded="rounded-3xl" />
               <div className="mt-4 grid grid-cols-4 gap-3">
@@ -119,8 +119,8 @@ export default async function ModelPage({ params }: { params: Promise<{ category
 
       {/* overview + highlights */}
       <section className="section-pad bg-white">
-        <div className="container-max grid gap-12 lg:grid-cols-[1.2fr_1fr]">
-          <div>
+        <div className="container-max grid grid-cols-1 gap-12 lg:grid-cols-[1.2fr_1fr]">
+          <div className="min-w-0">
             <p className="eyebrow">{t("model.overview", locale)}</p>
             <h2 className="mt-3 text-2xl font-bold text-ink md:text-3xl">{t("model.overviewTitle", locale)}</h2>
             <p className="mt-4 text-lg leading-relaxed text-steel">{locDescription(m, locale)}</p>
@@ -152,10 +152,7 @@ export default async function ModelPage({ params }: { params: Promise<{ category
               </div>
               <div className="mt-6 rounded-xl bg-ink p-5 text-white">
                 <p className="text-sm text-white/70">{t("model.needHelp", locale)}</p>
-                <p className="mt-1 font-semibold">
-                  {t("model.needHelpBody", locale)} {m.name}
-                  {t("model.needHelpBody2", locale)}
-                </p>
+                <p className="mt-1 font-semibold">{t("model.needHelpBody", locale).replace("{m}", m.name)}</p>
                 <Link href="/contact" className="btn btn-white mt-4 w-full !py-2.5 text-sm">
                   {t("cta.contactSales", locale)} <Icon.ArrowRight size={15} />
                 </Link>
@@ -198,7 +195,7 @@ export default async function ModelPage({ params }: { params: Promise<{ category
       {related.length > 0 && (
         <section className="section-pad bg-white">
           <div className="container-max">
-            <div className="flex items-end justify-between">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2">
               <h2 className="text-2xl font-bold text-ink">
                 {t("model.moreIn", locale)} · {lc.name}
               </h2>

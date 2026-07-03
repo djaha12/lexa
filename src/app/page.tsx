@@ -1,19 +1,14 @@
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
 import { Reveal } from "@/components/Reveal";
-import { SectionHeading, ArrowLink } from "@/components/ui";
-import { ProductCard } from "@/components/ProductCard";
-import { ProductVisual } from "@/components/ProductVisual";
+import { SectionHeading } from "@/components/ui";
 import { PhoneNumbers } from "@/components/PhoneNumbers";
 import { CatalogCTA } from "@/components/CatalogCTA";
 import { CategoryIcon, Icon } from "@/components/Icons";
-import { categories, featuredModels, modelsInCategory } from "@/data/products";
 import { industries } from "@/data/site";
-import { accent } from "@/lib/theme";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
 import { tx, type L } from "@/i18n/config";
-import { locCategory } from "@/i18n/content";
 import { locIndustry } from "@/i18n/site";
 import { dealer } from "@/config/dealer";
 
@@ -64,12 +59,12 @@ const why: { icon: string; title: L; body: L }[] = [
 ];
 
 const visitL = {
-  eyebrow: { ru: "Приезжайте к нам", en: "Visit us", zh: "欢迎到访" } as L,
+  eyebrow: { ru: "Наш офис", en: "Our office", zh: "我们的办公室" } as L,
   title: { ru: "Офис в Бишкеке", en: "Office in Bishkek", zh: "比什凯克办公室" } as L,
   intro: {
-    ru: "Приезжайте посмотреть технику, обсудить условия и сервис. Работаем с частными клиентами и компаниями по всему Кыргызстану.",
-    en: "Come to see the machines, discuss terms and service. We work with private customers and companies across Kyrgyzstan.",
-    zh: "欢迎前来看机、洽谈条件与服务。我们服务于吉尔吉斯斯坦全境的个人与企业客户。",
+    ru: "Наш офис расположен в Бишкеке. Будем рады проконсультировать вас и подобрать оптимальное решение для ваших задач.",
+    en: "Our office is located in Bishkek. We will be glad to advise you and select the optimal solution for your needs.",
+    zh: "我们的办公室位于比什凯克。我们很乐意为您提供咨询，并为您的需求匹配最合适的方案。",
   } as L,
   addr: { ru: "Адрес", en: "Address", zh: "地址" } as L,
   phone: { ru: "Телефоны", en: "Phone", zh: "电话" } as L,
@@ -78,7 +73,6 @@ const visitL = {
 
 export default async function Home() {
   const locale = await getLocale();
-  const featured = featuredModels();
   return (
     <>
       <Hero />
@@ -98,7 +92,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* WHY US — moved up for prominence */}
+      {/* WHY US */}
       <section className="section-pad bg-paper">
         <div className="container-max grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal>
@@ -133,78 +127,12 @@ export default async function Home() {
       </section>
 
       {/* FULL CATALOGUE CTA */}
-      <section className="bg-paper pb-4 pt-2 md:pb-6">
+      <section className="bg-white py-14 md:py-16">
         <CatalogCTA locale={locale} />
       </section>
 
-      {/* PRODUCT RANGE */}
-      <section className="section-pad bg-white">
-        <div className="container-max">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading
-              eyebrow={t("home.range.eyebrow", locale)}
-              title={t("home.range.title", locale)}
-              intro={t("home.range.intro", locale)}
-            />
-            <ArrowLink href="/products" className="mb-2">
-              {t("home.range.viewAll", locale)}
-            </ArrowLink>
-          </div>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((c, idx) => {
-              const count = modelsInCategory(c.slug).length;
-              const lc = locCategory(c, locale);
-              return (
-                <Reveal key={c.slug} delay={(idx % 3) * 80}>
-                  <Link href={`/products/${c.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
-                    <ProductVisual accentKey={c.accent} icon={c.icon} className="aspect-[16/9]" rounded="rounded-none" />
-                    <div className="flex flex-1 flex-col p-6">
-                      <div className="flex items-center gap-3">
-                        <span
-                          className="grid h-9 w-9 place-items-center rounded-lg"
-                          style={{ background: accent(c.accent).tint, color: accent(c.accent).ink }}
-                        >
-                          <CategoryIcon name={c.icon} size={20} />
-                        </span>
-                        <h3 className="text-xl font-bold text-ink group-hover:text-brand">{lc.name}</h3>
-                      </div>
-                      <p className="mt-3 flex-1 text-sm leading-relaxed text-steel">{lc.tagline}</p>
-                      <div className="mt-5 flex items-center justify-between border-t border-line pt-4">
-                        <span className="text-xs font-medium text-mist">
-                          {count} {t("common.models", locale)} · {c.subcategories.length} {t("common.lines", locale)}
-                        </span>
-                        <Icon.ArrowRight size={18} className="text-brand transition-transform group-hover:translate-x-1" />
-                      </div>
-                    </div>
-                  </Link>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURED MODELS */}
-      <section className="section-pad bg-paper">
-        <div className="container-max">
-          <SectionHeading
-            eyebrow={t("home.featured.eyebrow", locale)}
-            title={t("home.featured.title", locale)}
-            intro={t("home.featured.intro", locale)}
-          />
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.slice(0, 8).map((m, idx) => (
-              <Reveal key={m.slug} delay={(idx % 4) * 70}>
-                <ProductCard model={m} locale={locale} compact />
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* INDUSTRIES */}
-      <section className="section-pad bg-white">
+      <section className="section-pad bg-paper">
         <div className="container-max">
           <SectionHeading
             eyebrow={t("home.ind.eyebrow", locale)}
@@ -218,10 +146,10 @@ export default async function Home() {
               return (
                 <Reveal key={ind.name} delay={(idx % 3) * 70}>
                   <Link href="/products" className="card card-hover group flex items-center gap-4 p-5">
-                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-paper text-ink transition-colors group-hover:bg-brand group-hover:text-white">
+                    <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-white text-ink ring-1 ring-line transition-colors group-hover:bg-brand group-hover:text-white group-hover:ring-brand">
                       <CategoryIcon name={ind.icon} size={24} />
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <h3 className="font-bold text-ink group-hover:text-brand">{li.name}</h3>
                       <p className="text-sm text-steel">{li.blurb}</p>
                     </div>
@@ -233,7 +161,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* VISIT / CONTACTS */}
+      {/* OFFICE / CONTACTS */}
       <section className="relative isolate overflow-hidden bg-ink py-20 text-white md:py-28">
         <div
           className="absolute inset-0 -z-10"
@@ -258,13 +186,13 @@ export default async function Home() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <div className="glass-dark glass-sheen relative rounded-3xl p-8">
+            <div className="glass-dark glass-sheen relative rounded-3xl p-6 sm:p-8">
               <div className="relative space-y-5">
                 <div className="flex items-start gap-3">
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand text-white">
                     <Icon.Pin size={20} />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <div className="text-sm text-white/55">{tx(visitL.addr, locale)}</div>
                     <div className="font-semibold">{tx(dealer.address, locale)}, {tx(dealer.city, locale)}</div>
                   </div>
@@ -273,7 +201,7 @@ export default async function Home() {
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand text-white">
                     <Icon.Phone size={20} />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <div className="mb-1 text-sm text-white/55">{tx(visitL.phone, locale)}</div>
                     <PhoneNumbers phones={dealer.phones} locale={locale} tone="dark" />
                   </div>
@@ -282,7 +210,7 @@ export default async function Home() {
                   <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand text-white">
                     <Icon.Spec size={20} />
                   </span>
-                  <div>
+                  <div className="min-w-0">
                     <div className="text-sm text-white/55">{tx(visitL.hours, locale)}</div>
                     <div className="font-semibold">{tx(dealer.hours, locale)}</div>
                   </div>

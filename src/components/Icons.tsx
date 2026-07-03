@@ -340,26 +340,20 @@ export function Logo({
   country?: string;
 }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 ${className}`}>
-      <SanyMark size={32} />
-      <span className="leading-none">
-        <span
-          className="block text-[21px]"
-          style={{
-            fontWeight: 900,
-            letterSpacing: "-0.02em",
-            fontFamily: '"Arial Black", "Arial Narrow", "Helvetica Neue", Inter, system-ui, sans-serif',
-          }}
-        >
-          <span style={{ color: "var(--color-brand)" }}>SANY</span>
-          {country ? (
-            <span style={{ fontWeight: 800, color: light ? "#fff" : "var(--color-ink)", letterSpacing: "-0.01em" }}>
-              {" "}
-              {country}
-            </span>
-          ) : null}
+    <span
+      className={`inline-flex items-center whitespace-nowrap text-[20px] leading-none md:text-[22px] ${className}`}
+      style={{
+        fontWeight: 900,
+        letterSpacing: "-0.02em",
+        fontFamily: '"Arial Black", "Helvetica Neue", Inter, system-ui, sans-serif',
+      }}
+    >
+      <span style={{ color: "var(--color-brand)" }}>SANY</span>
+      {country ? (
+        <span className="ml-1.5" style={{ fontWeight: 700, color: light ? "#fff" : "var(--color-ink)", letterSpacing: "0" }}>
+          {country}
         </span>
-      </span>
+      ) : null}
     </span>
   );
 }

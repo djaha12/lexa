@@ -31,13 +31,13 @@ export function CategoryBrowser({
     <div>
       <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-wrap gap-2">
-          <FilterChip label={`${t("browser.all", locale)} (${models.length})`} active={active === "all"} onClick={() => setActive("all")} />
+          <FilterChip label={t("browser.all", locale)} active={active === "all"} onClick={() => setActive("all")} />
           {subcategories
             .filter((s) => s.count > 0)
             .map((s) => (
               <FilterChip
                 key={s.slug}
-                label={`${locSubcategory(categorySlug, s, locale).name} (${s.count})`}
+                label={locSubcategory(categorySlug, s, locale).name}
                 active={active === s.slug}
                 onClick={() => setActive(s.slug)}
               />

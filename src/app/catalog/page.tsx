@@ -22,11 +22,11 @@ export default async function CatalogPage() {
           <Link href="/products" className="text-sm font-medium text-steel hover:text-brand">
             ← {t("nav.products", locale)}
           </Link>
-          <div className="flex gap-2">
-            <a href={pdf} download className="btn btn-primary !py-2.5 text-sm">
+          <div className="flex w-full flex-wrap gap-2 sm:w-auto">
+            <a href={pdf} download className="btn btn-primary flex-1 justify-center !py-2.5 text-sm sm:flex-none">
               <Icon.Download size={16} /> {t("catalog.download", locale)}
             </a>
-            <PrintButton label={t("catalog.print", locale)} className="btn btn-ghost !py-2.5 text-sm" />
+            <PrintButton label={t("catalog.print", locale)} className="btn btn-ghost flex-1 justify-center !py-2.5 text-sm sm:flex-none" />
           </div>
         </div>
       </div>

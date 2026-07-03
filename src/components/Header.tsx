@@ -98,7 +98,7 @@ export function Header() {
               <Link href="/service" className="link-underline">
                 {t("header.afterSales", locale)}
               </Link>
-              <span className="inline-flex items-center gap-1.5">
+              <span className="hidden items-center gap-1.5 xl:inline-flex">
                 <Icon.Pin size={14} /> {tx(dealer.address, locale)}
               </span>
               <a href={telHref(dealer.phones[0])} className="inline-flex items-center gap-1.5 font-semibold link-underline">
@@ -320,7 +320,7 @@ export function Header() {
                 <p className="px-2 pb-1 text-xs font-semibold uppercase tracking-wide text-mist">
                   <Icon.Globe size={13} className="mr-1 inline" />
                 </p>
-                <div className="flex gap-2 px-2">
+                <div className="flex flex-wrap gap-2 px-2">
                   {locales.map((l) => (
                     <button
                       key={l}

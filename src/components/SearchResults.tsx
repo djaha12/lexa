@@ -104,7 +104,7 @@ export function SearchResults() {
 
       {query && (
         <div className="mt-8">
-          <p className="text-steel">
+          <p className="break-words text-steel">
             {total} {total === 1 ? t("search.result", locale) : t("search.results", locale)}{" "}
             <span className="font-semibold text-ink">«{q}»</span>
           </p>

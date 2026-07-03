@@ -244,8 +244,11 @@ const S: Record<string, L> = {
   "model.highlights": { ru: "Ключевые преимущества", en: "Key highlights", zh: "核心亮点" },
   "model.applications": { ru: "Типичные применения", en: "Typical applications", zh: "典型应用" },
   "model.needHelp": { ru: "Нужна помощь с выбором?", en: "Need help choosing?", zh: "需要选型帮助？" },
-  "model.needHelpBody": { ru: "Обсудите модель", en: "Talk to a SANY specialist about the", zh: "就以下机型咨询 SANY 专家：" },
-  "model.needHelpBody2": { ru: "с экспертом SANY.", en: ".", zh: "" },
+  "model.needHelpBody": {
+    ru: "Обсудите модель {m} с экспертом SANY.",
+    en: "Talk to a SANY specialist about the {m}.",
+    zh: "就 {m} 咨询 SANY 专家。",
+  },
   "model.specs": { ru: "Технические характеристики", en: "Technical specifications", zh: "技术参数" },
   "model.fullSpecs": { ru: "Все характеристики", en: "Full specifications", zh: "完整参数" },
   "model.specNote": {

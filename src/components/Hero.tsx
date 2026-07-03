@@ -44,7 +44,7 @@ export function Hero() {
             {t("hero.badge", locale)}
           </span>
 
-          <h1 className="mt-6 text-[2.6rem] font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-[4.2rem]">
+          <h1 className="mt-6 text-balance break-words text-[2.6rem] font-extrabold leading-[1.02] tracking-tight sm:text-6xl lg:text-[4.2rem]">
             {t("hero.titleTop", locale)}
             <br />
             <span className="relative inline-block">
