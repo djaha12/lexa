@@ -195,6 +195,43 @@
   @media (min-width: 768px) { .section-pad { padding-block: 7rem; } }
 }
 
+@media print {
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  .catalog {
+    padding-top: 0 !important;
+  }
+  .catalog-cat {
+    break-before: page;
+  }
+  .catalog-cover + * .catalog-cat:first-of-type,
+  .catalog-cat:first-of-type {
+    break-before: auto;
+  }
+  .catalog-model {
+    break-inside: avoid;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
 @layer utilities {
   .text-balance { text-wrap: balance; }
   .grain {

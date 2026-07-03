@@ -5,6 +5,7 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { ProductVisual } from "@/components/ProductVisual";
 import { CategoryIcon, Icon } from "@/components/Icons";
+import { CatalogCTA } from "@/components/CatalogCTA";
 import { accent } from "@/lib/theme";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
@@ -45,6 +46,10 @@ export default async function ProductsPage() {
           ))}
         </div>
       </div>
+
+      <section className="bg-paper pt-10 md:pt-14">
+        <CatalogCTA locale={locale} />
+      </section>
 
       <div className="bg-paper">
         {categories.map((c, ci) => {

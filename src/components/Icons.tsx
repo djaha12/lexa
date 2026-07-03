@@ -308,6 +308,28 @@ export const Icon = {
 
 // ---------- Brand wordmark ----------
 
+/** SANY tri-blade emblem (recreated as SVG). */
+export function SanyMark({ size = 30, className }: { size?: number; className?: string }) {
+  const blade =
+    "M0 -18 C4.6 -11 7.3 -7 7.9 -2.6 C8.4 1.7 7.5 4.6 5.6 5.5 C3.7 6.3 2.1 4.6 1.5 1.9 C0.7 -1.4 -1.4 -8.6 0 -18 Z";
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 48 48"
+      className={className}
+      style={{ fill: "var(--color-brand)" }}
+      aria-hidden
+    >
+      <g transform="translate(24 24)">
+        <path d={blade} />
+        <path d={blade} transform="rotate(120)" />
+        <path d={blade} transform="rotate(240)" />
+      </g>
+    </svg>
+  );
+}
+
 export function Logo({
   light = false,
   className = "",
@@ -318,33 +340,20 @@ export function Logo({
   country?: string;
 }) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
-      <span
-        className="grid place-items-center rounded-[7px] font-black tracking-tighter"
-        style={{
-          width: 34,
-          height: 34,
-          background: "var(--color-brand)",
-          color: "#fff",
-          fontSize: 15,
-          letterSpacing: "-0.06em",
-        }}
-      >
-        三
-      </span>
+    <span className={`inline-flex items-center gap-2.5 ${className}`}>
+      <SanyMark size={32} />
       <span className="leading-none">
         <span
-          className="block text-[20px]"
+          className="block text-[21px]"
           style={{
-            color: light ? "#fff" : "var(--color-ink)",
             fontWeight: 900,
-            letterSpacing: "-0.035em",
-            fontFamily: '"Arial Black", "Helvetica Neue", Inter, system-ui, sans-serif',
+            letterSpacing: "-0.02em",
+            fontFamily: '"Arial Black", "Arial Narrow", "Helvetica Neue", Inter, system-ui, sans-serif',
           }}
         >
-          SANY
+          <span style={{ color: "var(--color-brand)" }}>SANY</span>
           {country ? (
-            <span style={{ fontWeight: 800, color: "var(--color-brand)", letterSpacing: "-0.02em" }}>
+            <span style={{ fontWeight: 800, color: light ? "#fff" : "var(--color-ink)", letterSpacing: "-0.01em" }}>
               {" "}
               {country}
             </span>

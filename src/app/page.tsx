@@ -5,6 +5,7 @@ import { SectionHeading, ArrowLink } from "@/components/ui";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductVisual } from "@/components/ProductVisual";
 import { PhoneNumbers } from "@/components/PhoneNumbers";
+import { CatalogCTA } from "@/components/CatalogCTA";
 import { CategoryIcon, Icon } from "@/components/Icons";
 import { categories, featuredModels, modelsInCategory } from "@/data/products";
 import { industries } from "@/data/site";
@@ -129,6 +130,11 @@ export default async function Home() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* FULL CATALOGUE CTA */}
+      <section className="bg-paper pb-4 pt-2 md:pb-6">
+        <CatalogCTA locale={locale} />
       </section>
 
       {/* PRODUCT RANGE */}

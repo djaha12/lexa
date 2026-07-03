@@ -196,6 +196,20 @@ const S: Record<string, L> = {
   "link.cookies": { ru: "Cookie", en: "Cookies", zh: "Cookie" },
   "link.globalNetwork": { ru: "Глобальная сеть", en: "Global network", zh: "全球网络" },
 
+  // ---- catalog ----
+  "catalog.eyebrow": { ru: "Полный каталог", en: "Full catalogue", zh: "完整目录" },
+  "catalog.title": { ru: "Весь каталог техники SANY", en: "The complete SANY equipment catalogue", zh: "SANY 设备完整目录" },
+  "catalog.body": {
+    ru: "Весь ассортимент техники SANY с характеристиками — в одном каталоге. Скачайте PDF или откройте полный каталог онлайн.",
+    en: "The entire SANY equipment range with specifications in one catalogue. Download the PDF or open the full catalogue online.",
+    zh: "SANY 全系设备及参数，尽在一份目录中。下载 PDF 或在线打开完整目录。",
+  },
+  "catalog.download": { ru: "Скачать каталог PDF", en: "Download PDF catalogue", zh: "下载 PDF 目录" },
+  "catalog.open": { ru: "Открыть полный каталог", en: "Open full catalogue", zh: "打开完整目录" },
+  "catalog.pageTitle": { ru: "Полный каталог техники", en: "Full equipment catalogue", zh: "设备完整目录" },
+  "catalog.print": { ru: "Печать / сохранить в PDF", en: "Print / save as PDF", zh: "打印 / 另存为 PDF" },
+  "catalog.contents": { ru: "Содержание", en: "Contents", zh: "目录" },
+
   // ---- products index ----
   "products.eyebrow": { ru: "Каталог продукции", en: "Product catalogue", zh: "产品目录" },
   "products.title": { ru: "Полный модельный ряд SANY", en: "The complete SANY range", zh: "SANY 完整产品线" },
