@@ -9,6 +9,28 @@ forms.
 > Independent concept / educational build. All product data and imagery are
 > original placeholders; not affiliated with or endorsed by SANY Group.
 
+## 🚀 Deploy
+
+This is a standard Next.js app — Vercel auto-detects everything, no config needed.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/djaha12/lexa)
+
+**Or import the existing repo** (recommended — keeps this repo):
+
+1. Go to **[vercel.com/new](https://vercel.com/new)** → **Import Git Repository** → select `djaha12/lexa`
+   (authorize Vercel to access the repo on first use).
+2. Framework preset resolves to **Next.js** automatically; leave Root Directory,
+   Build Command and Output at their defaults.
+3. Click **Deploy**. In ~1–2 min you get a `*.vercel.app` URL.
+
+Notes:
+- The production branch is `claude/sany-global-redesign-e4ftzv` (the repo's default
+  branch — it holds the full app), so no branch configuration is required.
+- Pages are server-rendered (a `locale` cookie drives RU/EN/ZH), which works out of
+  the box on Vercel as serverless functions. No environment variables are needed.
+
+Or via CLI: `npm i -g vercel && vercel --prod`.
+
 ## ✨ Highlights
 
 - **Complete product catalogue** — 10 equipment families, 40+ representative models
