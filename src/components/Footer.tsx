@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { categories } from "@/data/products";
 import { Icon, Logo } from "./Icons";
+import { PhoneNumbers } from "./PhoneNumbers";
 import { t } from "@/i18n/strings";
 import { locCategory } from "@/i18n/content";
 import { tx, type L, type Locale } from "@/i18n/config";
@@ -23,14 +24,14 @@ const labels = {
     zh: "联系我们——我们将帮您选择合适的 SANY 设备、报价并安排服务。",
   } as L,
   rights: {
-    ru: "© 2026 SANY Кыргызстан. Официальный дилер техники SANY.",
-    en: "© 2026 SANY Kyrgyzstan. Authorized SANY equipment dealer.",
-    zh: "© 2026 SANY 吉尔吉斯斯坦。SANY 设备授权经销商。",
+    ru: "© 2026 SANY Кыргызстан. Дилер SANY в Кыргызстане.",
+    en: "© 2026 SANY Kyrgyzstan. SANY dealer in Kyrgyzstan.",
+    zh: "© 2026 SANY 吉尔吉斯斯坦。SANY 吉尔吉斯斯坦经销商。",
   } as L,
   intro: {
-    ru: "Официальный дилер техники SANY в Кыргызстане: продажа, сервис, оригинальные запчасти и поддержка клиентов по всей стране.",
-    en: "Authorized SANY equipment dealer in Kyrgyzstan: sales, service, genuine parts and customer support nationwide.",
-    zh: "SANY 在吉尔吉斯斯坦的授权经销商：全国范围的销售、服务、原厂配件与客户支持。",
+    ru: "Дилер SANY в Кыргызстане: продажа, сервис, оригинальные запчасти и поддержка клиентов по всей стране.",
+    en: "SANY dealer in Kyrgyzstan: sales, service, genuine parts and customer support nationwide.",
+    zh: "SANY 吉尔吉斯斯坦经销商：全国范围的销售、服务、原厂配件与客户支持。",
   } as L,
 };
 
@@ -85,15 +86,9 @@ export function Footer({ locale }: { locale: Locale }) {
               <Icon.Pin size={16} className="mt-0.5 shrink-0 text-brand" />
               <span>{tx(dealer.address, locale)}, {tx(dealer.city, locale)}</span>
             </li>
-            {dealer.phones.map((p) => (
-              <li key={p} className="flex items-center gap-2.5">
-                <Icon.Phone size={16} className="shrink-0 text-brand" />
-                <a href={telHref(p)} className="hover:text-white">{p}</a>
-              </li>
-            ))}
-            <li className="flex items-center gap-2.5">
-              <Icon.Mail size={16} className="shrink-0 text-brand" />
-              <a href={`mailto:${dealer.email}`} className="hover:text-white">{dealer.email}</a>
+            <li className="flex items-start gap-2.5">
+              <Icon.Phone size={16} className="mt-0.5 shrink-0 text-brand" />
+              <PhoneNumbers phones={dealer.phones} locale={locale} tone="dark" size="sm" />
             </li>
             <li className="flex items-center gap-2.5 text-white/50">
               <Icon.Spec size={16} className="shrink-0 text-brand" />

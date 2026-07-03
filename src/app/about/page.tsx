@@ -3,20 +3,21 @@ import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/ui";
 import { CategoryIcon, Icon } from "@/components/Icons";
+import { PhoneNumbers } from "@/components/PhoneNumbers";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
 import { tx, type L } from "@/i18n/config";
-import { dealer, telHref } from "@/config/dealer";
+import { dealer } from "@/config/dealer";
 
 export const metadata = { title: "О компании" };
 
 const S = {
   eyebrow: { ru: "О компании", en: "About us", zh: "关于我们" } as L,
-  title: { ru: "SANY Кыргызстан — официальный дилер", en: "SANY Kyrgyzstan — authorized dealer", zh: "SANY 吉尔吉斯斯坦——授权经销商" } as L,
+  title: { ru: "Дилер SANY в Кыргызстане", en: "SANY dealer in Kyrgyzstan", zh: "SANY 吉尔吉斯斯坦经销商" } as L,
   intro: {
-    ru: "Мы — официальный дилер техники SANY в Кыргызстане. Продаём, обслуживаем и снабжаем запчастями строительную и спецтехнику для компаний и частных клиентов по всей стране.",
-    en: "We are the authorized dealer of SANY equipment in Kyrgyzstan. We sell, service and supply parts for construction and special machinery for companies and private customers nationwide.",
-    zh: "我们是 SANY 设备在吉尔吉斯斯坦的授权经销商，为全国的企业与个人客户提供工程及专用机械的销售、服务与配件供应。",
+    ru: "Мы — дилер SANY в Кыргызстане. Продаём, обслуживаем и снабжаем запчастями строительную и спецтехнику для компаний и частных клиентов по всей стране.",
+    en: "We are the SANY dealer in Kyrgyzstan. We sell, service and supply parts for construction and special machinery for companies and private customers nationwide.",
+    zh: "我们是 SANY 在吉尔吉斯斯坦的经销商，为全国的企业与个人客户提供工程及专用机械的销售、服务与配件供应。",
   } as L,
   doEyebrow: { ru: "Что мы делаем", en: "What we do", zh: "我们的业务" } as L,
   doTitle: { ru: "Всё для вашей техники — в одном месте", en: "Everything for your machine — in one place", zh: "设备所需，一站解决" } as L,
@@ -64,7 +65,7 @@ const doCards: { icon: string; title: L; body: L }[] = [
 ];
 
 const whyList: L[] = [
-  { ru: "Официальный дилер — прямые поставки и гарантия SANY", en: "Authorized dealer — direct supply and SANY warranty", zh: "授权经销商——直供与 SANY 质保" },
+  { ru: "Дилер SANY — прямые поставки и гарантия производителя", en: "SANY dealer — direct supply and manufacturer warranty", zh: "SANY 经销商——直供与厂家质保" },
   { ru: "Собственный сервис и обученные инженеры", en: "In-house service and trained engineers", zh: "自有服务团队与专业工程师" },
   { ru: "Склад оригинальных запчастей и расходников", en: "Stock of genuine parts and consumables", zh: "原厂配件与易损件库存" },
   { ru: "Выезд и поддержка по всему Кыргызстану", en: "On-site support across Kyrgyzstan", zh: "覆盖全吉尔吉斯斯坦的上门支持" },
@@ -127,25 +128,18 @@ export default async function AboutPage() {
             </div>
           </Reveal>
           <Reveal delay={120}>
-            <div className="relative overflow-hidden rounded-3xl bg-ink p-10 text-white">
-              <div className="grain absolute inset-0 opacity-40" aria-hidden />
+            <div className="glass-dark glass-sheen relative overflow-hidden rounded-3xl bg-ink/80 p-10 text-white">
               <div className="relative">
-                <h3 className="text-xl font-bold">{tx(dealer.branchLabel, locale)}</h3>
-                <div className="mt-5 space-y-3 text-white/75">
+                <h3 className="text-xl font-bold">{tx(dealer.officeLabel, locale)} · {tx(dealer.city, locale)}</h3>
+                <div className="mt-5 space-y-4 text-white/80">
                   <p className="flex items-start gap-2.5">
                     <Icon.Pin size={18} className="mt-0.5 shrink-0 text-brand" />
                     {tx(dealer.address, locale)}, {tx(dealer.city, locale)}
                   </p>
-                  {dealer.phones.map((p) => (
-                    <p key={p} className="flex items-center gap-2.5">
-                      <Icon.Phone size={18} className="shrink-0 text-brand" />
-                      <a href={telHref(p)} className="font-semibold hover:text-white">{p}</a>
-                    </p>
-                  ))}
-                  <p className="flex items-center gap-2.5">
-                    <Icon.Mail size={18} className="shrink-0 text-brand" />
-                    <a href={`mailto:${dealer.email}`} className="hover:text-white">{dealer.email}</a>
-                  </p>
+                  <div className="flex items-start gap-2.5">
+                    <Icon.Phone size={18} className="mt-0.5 shrink-0 text-brand" />
+                    <PhoneNumbers phones={dealer.phones} locale={locale} tone="dark" />
+                  </div>
                   <p className="flex items-center gap-2.5 text-white/55">
                     <Icon.Spec size={18} className="shrink-0 text-brand" />
                     {tx(dealer.hours, locale)}

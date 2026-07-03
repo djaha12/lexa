@@ -8,8 +8,8 @@ const S: Record<string, L> = {
   // ---- common ----
   "brand.slogan": {
     ru: "Дилер техники SANY в Кыргызстане",
-    en: "Authorized SANY equipment dealer in Kyrgyzstan",
-    zh: "SANY 吉尔吉斯斯坦授权经销商",
+    en: "SANY equipment dealer in Kyrgyzstan",
+    zh: "SANY 吉尔吉斯斯坦设备经销商",
   },
   "dealer.subtitle": {
     ru: "Дилер техники SANY в Кыргызстане",
@@ -60,9 +60,9 @@ const S: Record<string, L> = {
 
   // ---- hero ----
   "hero.badge": {
-    ru: "Официальный дилер SANY в Кыргызстане",
-    en: "Authorized SANY dealer in Kyrgyzstan",
-    zh: "SANY 吉尔吉斯斯坦授权经销商",
+    ru: "Дилер SANY в Кыргызстане",
+    en: "SANY dealer in Kyrgyzstan",
+    zh: "SANY 吉尔吉斯斯坦经销商",
   },
   "hero.titleTop": { ru: "Техника SANY", en: "SANY equipment", zh: "SANY 工程机械" },
   "hero.titleAccent": { ru: "в Кыргызстане", en: "in Kyrgyzstan", zh: "在吉尔吉斯斯坦" },
@@ -96,7 +96,7 @@ const S: Record<string, L> = {
 
   // ---- home: why ----
   "home.why.eyebrow": { ru: "Почему мы", en: "Why us", zh: "为何选择我们" },
-  "home.why.title": { ru: "Официальный дилер, а не просто продавец", en: "An authorized dealer, not just a seller", zh: "授权经销商，而不仅是卖家" },
+  "home.why.title": { ru: "Не просто продавец, а надёжный дилер", en: "More than a seller — a reliable dealer", zh: "不只是卖家，而是可靠的经销商" },
   "home.why.intro": {
     ru: "Покупая у нас, вы получаете технику SANY с гарантией, сервис силами обученных инженеров, оригинальные запчасти и поддержку по всему Кыргызстану.",
     en: "Buy from us and you get SANY machines with warranty, service by trained engineers, genuine parts and support across Kyrgyzstan.",
@@ -163,9 +163,9 @@ const S: Record<string, L> = {
     zh: "与 SANY 专家探讨适合您运营的设备、金融方案与售后支持。",
   },
   "footer.intro": {
-    ru: "Официальный дилер техники SANY в Кыргызстане: продажа, сервис, оригинальные запчасти и поддержка клиентов по всей стране.",
-    en: "Authorized SANY equipment dealer in Kyrgyzstan: sales, service, genuine parts and customer support nationwide.",
-    zh: "SANY 在吉尔吉斯斯坦的授权经销商：全国范围的销售、服务、原厂配件与客户支持。",
+    ru: "Дилер SANY в Кыргызстане: продажа, сервис, оригинальные запчасти и поддержка клиентов по всей стране.",
+    en: "SANY dealer in Kyrgyzstan: sales, service, genuine parts and customer support nationwide.",
+    zh: "SANY 吉尔吉斯斯坦经销商：全国范围的销售、服务、原厂配件与客户支持。",
   },
   "footer.col.products": { ru: "Продукция", en: "Products", zh: "产品" },
   "footer.col.company": { ru: "Компания", en: "Company", zh: "公司" },
@@ -258,9 +258,9 @@ const S: Record<string, L> = {
   "contact.eyebrow": { ru: "Контакты", en: "Contact us", zh: "联系我们" },
   "contact.title": { ru: "Давайте строить вместе", en: "Let's build something", zh: "共建未来" },
   "contact.intro": {
-    ru: "Запросите предложение, задайте технический вопрос или найдите ближайшего дилера. Отвечаем быстро.",
-    en: "Request a quote, ask a technical question or find your nearest dealer. Our team responds fast.",
-    zh: "索取报价、咨询技术问题或查找最近的经销商。我们的团队快速响应。",
+    ru: "Запросите коммерческое предложение или задайте технический вопрос — отвечаем быстро.",
+    en: "Request a quote or ask a technical question — we respond fast.",
+    zh: "索取报价或咨询技术问题——我们快速响应。",
   },
   "contact.talk": { ru: "Связаться с SANY", en: "Talk to SANY", zh: "联系 SANY" },
   "contact.talkBody": {
@@ -271,6 +271,11 @@ const S: Record<string, L> = {
   "contact.callSales": { ru: "Позвонить в отдел продаж", en: "Call sales", zh: "致电销售" },
   "contact.emailUs": { ru: "Написать нам", en: "Email us", zh: "邮件联系" },
   "contact.offices": { ru: "Региональные офисы", en: "Regional offices", zh: "区域办事处" },
+  "contact.phoneNote": {
+    ru: "По любому номеру — звонок или WhatsApp",
+    en: "Any number — call or WhatsApp",
+    zh: "任一号码——可致电或 WhatsApp",
+  },
   // form
   "form.name": { ru: "Имя и фамилия", en: "Full name", zh: "姓名" },
   "form.email": { ru: "Рабочий e-mail", en: "Work email", zh: "工作邮箱" },

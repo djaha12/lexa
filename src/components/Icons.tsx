@@ -298,6 +298,12 @@ export const Icon = {
       <path d="M14.7 6.3a4 4 0 00-5.3 5.3L4 17l3 3 5.4-5.4a4 4 0 005.3-5.3l-2.4 2.4-2.1-.6-.6-2.1z" />
     </svg>
   ),
+  Whatsapp: (p: P) => (
+    <svg {...base(p.size)} {...p} fill="currentColor" stroke="none">
+      <path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.5A10 10 0 1 0 12 2zm0 18.2c-1.4 0-2.8-.4-4.1-1.1l-.3-.2-2.9.9.9-2.8-.2-.3A8.2 8.2 0 1 1 12 20.2z" />
+      <path d="M17.4 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-1.6-.8-2.6-1.4-3.7-3.2-.3-.5.3-.5.8-1.5.1-.2 0-.3 0-.5 0-.1-.7-1.6-.9-2.2-.2-.6-.5-.5-.7-.5h-.5c-.2 0-.5.1-.7.3-.9.9-1 2.1-.6 3.4.4 1.3 1.2 2.4 1.4 2.6.2.2 2.4 3.7 5.8 4.9 2.9 1 3.2.7 3.8.6.6 0 1.7-.7 1.9-1.3.2-.7.2-1.2.2-1.3-.1-.2-.3-.2-.6-.4z" />
+    </svg>
+  ),
 };
 
 // ---------- Brand wordmark ----------
@@ -328,10 +334,21 @@ export function Logo({
       </span>
       <span className="leading-none">
         <span
-          className="block text-[19px] font-extrabold tracking-tight"
-          style={{ color: light ? "#fff" : "var(--color-ink)" }}
+          className="block text-[20px]"
+          style={{
+            color: light ? "#fff" : "var(--color-ink)",
+            fontWeight: 900,
+            letterSpacing: "-0.035em",
+            fontFamily: '"Arial Black", "Helvetica Neue", Inter, system-ui, sans-serif',
+          }}
         >
-          SANY{country ? <span className="font-semibold text-brand"> {country}</span> : null}
+          SANY
+          {country ? (
+            <span style={{ fontWeight: 800, color: "var(--color-brand)", letterSpacing: "-0.02em" }}>
+              {" "}
+              {country}
+            </span>
+          ) : null}
         </span>
       </span>
     </span>

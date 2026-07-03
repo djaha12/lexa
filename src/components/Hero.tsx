@@ -91,7 +91,7 @@ export function Hero() {
               <Link
                 key={c.slug}
                 href={`/products/${c.slug}`}
-                className={`group relative overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition-all hover:border-white/25 hover:bg-white/[0.08] ${
+                className={`group glass-dark glass-sheen relative overflow-hidden rounded-2xl p-4 transition-all hover:brightness-125 ${
                   idx === i % 6 ? "ring-1 ring-brand/60" : ""
                 }`}
                 style={{ minHeight: 104 }}
