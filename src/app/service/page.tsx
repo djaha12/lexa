@@ -2,96 +2,92 @@ import Link from "next/link";
 import { PageHero } from "@/components/PageHero";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/ui";
-import { Icon } from "@/components/Icons";
+import { CategoryIcon, Icon } from "@/components/Icons";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
 import { tx, type L } from "@/i18n/config";
+import { dealer, telHref } from "@/config/dealer";
 
-export const metadata = { title: "Service & Support" };
+export const metadata = { title: "Сервис и запчасти" };
+
+const S = {
+  eyebrow: { ru: "Сервис и запчасти", en: "Service & parts", zh: "服务与配件" } as L,
+  title: { ru: "Обслуживаем вашу технику SANY", en: "We keep your SANY machine running", zh: "让您的 SANY 设备持续运转" } as L,
+  intro: {
+    ru: "Собственный сервис, обученные инженеры и склад оригинальных запчастей. Гарантийное и постгарантийное обслуживание, ремонт и выезд на объект по всему Кыргызстану.",
+    en: "In-house service, trained engineers and a stock of genuine parts. Warranty and post-warranty service, repairs and on-site visits across Kyrgyzstan.",
+    zh: "自有服务团队、专业工程师及原厂配件库存。在吉尔吉斯斯坦全境提供保修与保外服务、维修及上门服务。",
+  } as L,
+  whatEyebrow: { ru: "Что мы предлагаем", en: "What we offer", zh: "我们的服务" } as L,
+  whatTitle: { ru: "Полное обслуживание техники", en: "Complete equipment care", zh: "全面的设备保障" } as L,
+  cta: { ru: "Нужен сервис или запчасти?", en: "Need service or parts?", zh: "需要服务或配件？" } as L,
+  ctaBody: {
+    ru: "Позвоните нам или оставьте заявку — поможем с ремонтом, ТО и подбором запчастей.",
+    en: "Call us or send a request — we'll help with repairs, maintenance and parts.",
+    zh: "致电或提交申请——我们将协助维修、保养与配件供应。",
+  } as L,
+};
 
 const services: { id: string; icon: string; title: L; body: L }[] = [
   {
     id: "parts",
-    icon: "Wrench",
-    title: { ru: "Оригинальные запчасти", en: "Genuine parts", zh: "原厂配件" },
+    icon: "parts",
+    title: { ru: "Оригинальные запчасти", en: "Genuine spare parts", zh: "原厂配件" },
     body: {
-      ru: "Региональные склады и быстрая доставка держат оригинальные запчасти SANY близко к вашему объекту.",
-      en: "Regional distribution centres and fast delivery keep original SANY parts close to your jobsite.",
-      zh: "区域配送中心与快速交付，让原厂 SANY 配件始终贴近您的工地。",
+      ru: "Расходники и узлы со склада, быстрый подбор по модели и поставка под заказ в кратчайшие сроки.",
+      en: "Consumables and components in stock, fast lookup by model and quick supply to order.",
+      zh: "库存易损件与总成，按型号快速匹配并迅速订购供应。",
     },
   },
   {
-    id: "maintenance",
-    icon: "Spec",
-    title: { ru: "ТО и ремонт", en: "Maintenance & repair", zh: "维护与维修" },
+    id: "repair",
+    icon: "wrench",
+    title: { ru: "Ремонт и ТО", en: "Repair & maintenance", zh: "维修与保养" },
     body: {
-      ru: "Планы профилактического обслуживания и опытные техники максимизируют время работы и ресурс машины.",
-      en: "Preventive maintenance plans and expert technicians maximise uptime and machine life.",
-      zh: "预防性保养计划与专业技师，最大化正常运行时间与设备寿命。",
+      ru: "Плановое обслуживание и ремонт любой сложности силами обученных инженеров.",
+      en: "Scheduled maintenance and repairs of any complexity by trained engineers.",
+      zh: "由专业工程师提供定期保养及各类维修。",
     },
   },
   {
-    id: "financing",
-    icon: "Download",
-    title: { ru: "Финансирование", en: "Financing", zh: "金融方案" },
+    id: "field",
+    icon: "delivery",
+    title: { ru: "Выезд на объект", en: "On-site service", zh: "上门服务" },
     body: {
-      ru: "Гибкий лизинг и финансирование под ваш денежный поток и задачи проекта.",
-      en: "Flexible leasing and financing packages tailored to your cash-flow and project needs.",
-      zh: "灵活的租赁与融资方案，契合您的现金流与项目需求。",
+      ru: "Обслуживание и ремонт прямо на вашей площадке — по всему Кыргызстану.",
+      en: "Servicing and repairs directly at your site — across Kyrgyzstan.",
+      zh: "在您的现场进行维护与维修——覆盖全吉尔吉斯斯坦。",
     },
   },
   {
-    id: "training",
-    icon: "Check",
-    title: { ru: "Обучение операторов", en: "Operator training", zh: "操作培训" },
+    id: "diagnostics",
+    icon: "chip",
+    title: { ru: "Диагностика", en: "Diagnostics", zh: "故障诊断" },
     body: {
-      ru: "Сертифицированное обучение повышает безопасность, производительность и экономичность на каждой машине.",
-      en: "Certified training improves safety, productivity and fuel efficiency on every machine.",
-      zh: "认证培训提升每台设备的安全性、生产率与燃油效率。",
+      ru: "Точная диагностика узлов и гидравлики, дефектовка и прозрачная смета работ.",
+      en: "Accurate diagnosis of components and hydraulics, inspection and a clear cost estimate.",
+      zh: "精准诊断总成与液压系统，检测并提供透明报价。",
     },
   },
   {
     id: "warranty",
-    icon: "Globe",
+    icon: "shield",
     title: { ru: "Гарантия", en: "Warranty", zh: "质保" },
     body: {
-      ru: "Комплексная гарантия с поддержкой более чем в 180 странах и регионах.",
-      en: "Comprehensive warranty coverage with support in more than 180 countries and regions.",
-      zh: "全面质保覆盖，支持遍及 180 多个国家和地区。",
+      ru: "Гарантийное обслуживание техники SANY и поддержка на протяжении всего срока службы.",
+      en: "Warranty service for SANY machines and support throughout their service life.",
+      zh: "SANY 设备保修服务，并在整个使用寿命内提供支持。",
     },
   },
   {
-    id: "telematics",
-    icon: "Phone",
-    title: { ru: "Парк и телематика", en: "Fleet & telematics", zh: "车队与远程信息" },
+    id: "consult",
+    icon: "excavator",
+    title: { ru: "Подбор техники", en: "Machine selection", zh: "设备选型" },
     body: {
-      ru: "Данные о состоянии, местоположении и загрузке машин в реальном времени для умного управления парком.",
-      en: "Real-time machine health, location and utilisation data to run a smarter fleet.",
-      zh: "实时的设备健康、位置与利用率数据，助您更智能地管理车队。",
+      ru: "Поможем выбрать модель под задачи и бюджет, рассчитаем стоимость и условия поставки.",
+      en: "We help choose the right model for your task and budget, and quote price and terms.",
+      zh: "帮您按任务与预算选择机型，并报价与供货条件。",
     },
-  },
-];
-
-const steps: { n: string; ttl: L; d: L }[] = [
-  {
-    n: "01",
-    ttl: { ru: "Обращение", en: "Contact", zh: "联系" },
-    d: { ru: "Свяжитесь с местным дилером SANY или глобальной линией поддержки.", en: "Reach your local SANY dealer or our global support line.", zh: "联系当地 SANY 经销商或全球支持热线。" },
-  },
-  {
-    n: "02",
-    ttl: { ru: "Диагностика", en: "Diagnose", zh: "诊断" },
-    d: { ru: "Телематика и эксперты быстро находят причину.", en: "Remote telematics and expert diagnosis pinpoint the issue fast.", zh: "远程信息与专家诊断，快速定位问题。" },
-  },
-  {
-    n: "03",
-    ttl: { ru: "Решение", en: "Resolve", zh: "解决" },
-    d: { ru: "Оригинальные запчасти и обученные техники быстро возвращают вас в строй.", en: "Genuine parts and trained technicians get you running again.", zh: "原厂配件与专业技师，让您迅速复工。" },
-  },
-  {
-    n: "04",
-    ttl: { ru: "Оптимизация", en: "Optimise", zh: "优化" },
-    d: { ru: "Постоянные планы держат ваш парк на пике эффективности.", en: "Ongoing plans keep your fleet performing at its best.", zh: "持续的方案让您的车队保持最佳状态。" },
   },
 ];
 
@@ -100,46 +96,25 @@ export default async function ServicePage() {
   return (
     <>
       <PageHero
-        eyebrow={t("service.eyebrow", locale)}
-        title={t("service.title", locale)}
-        intro={t("service.intro", locale)}
-        breadcrumbs={[{ label: "SANY", href: "/" }, { label: t("nav.service", locale) }]}
-        icon="chip"
+        eyebrow={tx(S.eyebrow, locale)}
+        title={tx(S.title, locale)}
+        intro={tx(S.intro, locale)}
+        breadcrumbs={[{ label: "SANY Кыргызстан", href: "/" }, { label: t("nav.service", locale) }]}
+        icon="wrench"
       />
 
       <section className="section-pad bg-paper">
         <div className="container-max">
-          <SectionHeading eyebrow={t("service.what.eyebrow", locale)} title={t("service.what.title", locale)} />
+          <SectionHeading eyebrow={tx(S.whatEyebrow, locale)} title={tx(S.whatTitle, locale)} />
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {services.map((s, i) => {
-              const IconEl = (Icon as Record<string, React.FC<{ size?: number; className?: string }>>)[s.icon];
-              return (
-                <Reveal key={s.id} delay={(i % 3) * 70}>
-                  <div id={s.id} className="card card-hover h-full scroll-mt-24 p-6">
-                    <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand">
-                      {IconEl && <IconEl size={24} />}
-                    </span>
-                    <h3 className="mt-5 text-lg font-bold text-ink">{tx(s.title, locale)}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-steel">{tx(s.body, locale)}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="section-pad bg-white">
-        <div className="container-max">
-          <SectionHeading eyebrow={t("service.how.eyebrow", locale)} title={t("service.how.title", locale)} align="center" />
-          <div className="mt-14 grid gap-6 md:grid-cols-4">
-            {steps.map((s, i) => (
-              <Reveal key={s.n} delay={i * 80}>
-                <div className="relative">
-                  <div className="text-5xl font-extrabold text-cloud">{s.n}</div>
-                  <h3 className="mt-2 text-lg font-bold text-ink">{tx(s.ttl, locale)}</h3>
-                  <p className="mt-1.5 text-sm text-steel">{tx(s.d, locale)}</p>
-                  {i < steps.length - 1 && <Icon.ArrowRight size={20} className="absolute -right-3 top-6 hidden text-mist md:block" />}
+            {services.map((s, i) => (
+              <Reveal key={s.id} delay={(i % 3) * 70}>
+                <div id={s.id} className="card card-hover h-full scroll-mt-24 p-6">
+                  <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand">
+                    <CategoryIcon name={s.icon} size={24} />
+                  </span>
+                  <h3 className="mt-5 text-lg font-bold text-ink">{tx(s.title, locale)}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-steel">{tx(s.body, locale)}</p>
                 </div>
               </Reveal>
             ))}
@@ -147,18 +122,19 @@ export default async function ServicePage() {
         </div>
       </section>
 
+      {/* CTA */}
       <section className="bg-ink py-16 text-white">
         <div className="container-max flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div>
-            <h2 className="text-2xl font-bold md:text-3xl">{t("service.cta.title", locale)}</h2>
-            <p className="mt-2 text-white/65">{t("service.cta.body", locale)}</p>
+            <h2 className="text-2xl font-bold md:text-3xl">{tx(S.cta, locale)}</h2>
+            <p className="mt-2 text-white/65">{tx(S.ctaBody, locale)}</p>
           </div>
-          <div className="flex gap-3">
-            <Link href="/contact" className="btn btn-primary">
-              {t("cta.contactSupport", locale)} <Icon.ArrowRight size={16} />
-            </Link>
-            <Link href="/products" className="btn btn-ghost !text-white !border-white/25 hover:!bg-white/10">
-              {t("cta.browseProducts", locale)}
+          <div className="flex flex-wrap gap-3">
+            <a href={telHref(dealer.phones[0])} className="btn btn-primary">
+              <Icon.Phone size={16} /> {dealer.phones[0]}
+            </a>
+            <Link href="/contact" className="btn btn-ghost !text-white !border-white/25 hover:!bg-white/10">
+              {t("cta.requestQuote", locale)}
             </Link>
           </div>
         </div>

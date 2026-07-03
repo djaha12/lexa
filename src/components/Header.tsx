@@ -9,14 +9,13 @@ import { accent } from "@/lib/theme";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { t } from "@/i18n/strings";
 import { locCategory } from "@/i18n/content";
-import { locales, localeNames, type Locale } from "@/i18n/config";
+import { locales, localeNames, tx, type Locale } from "@/i18n/config";
+import { dealer, telHref } from "@/config/dealer";
 
 const NAV = [
   { key: "products", href: "/products" },
-  { key: "solutions", href: "/solutions" },
   { key: "service", href: "/service" },
   { key: "about", href: "/about" },
-  { key: "news", href: "/news" },
   { key: "contact", href: "/contact" },
 ];
 
@@ -99,11 +98,11 @@ export function Header() {
               <Link href="/service" className="link-underline">
                 {t("header.afterSales", locale)}
               </Link>
-              <Link href="/about" className="link-underline">
-                {t("header.investors", locale)}
-              </Link>
-              <a href="tel:+861234567890" className="inline-flex items-center gap-1.5 link-underline">
-                <Icon.Phone size={14} /> 400-8866-318
+              <span className="inline-flex items-center gap-1.5">
+                <Icon.Pin size={14} /> {tx(dealer.address, locale)}
+              </span>
+              <a href={telHref(dealer.phones[0])} className="inline-flex items-center gap-1.5 font-semibold link-underline">
+                <Icon.Phone size={14} /> {dealer.phones[0]}
               </a>
               <div className="relative">
                 <button onClick={() => setLangOpen((v) => !v)} className="inline-flex items-center gap-1.5 font-medium">
@@ -137,8 +136,8 @@ export function Header() {
 
         {/* main bar */}
         <div className="container-max flex h-[60px] items-center justify-between gap-6">
-          <Link href="/" aria-label="SANY home" className="shrink-0">
-            <Logo light={!solid} />
+          <Link href="/" aria-label="SANY Кыргызстан" className="shrink-0">
+            <Logo light={!solid} country={tx(dealer.country, locale)} />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex">
@@ -286,7 +285,7 @@ export function Header() {
           <div className="absolute inset-0 bg-ink/50" onClick={() => setMobile(false)} />
           <div className="absolute inset-y-0 right-0 flex w-[86%] max-w-sm flex-col bg-white shadow-2xl animate-fade-up">
             <div className="flex h-[60px] items-center justify-between border-b border-line px-5">
-              <Logo />
+              <Logo country={tx(dealer.country, locale)} />
               <button onClick={() => setMobile(false)} aria-label="Close" className="text-ink">
                 <Icon.Close size={24} />
               </button>

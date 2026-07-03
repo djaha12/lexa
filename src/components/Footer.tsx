@@ -3,30 +3,36 @@ import { categories } from "@/data/products";
 import { Icon, Logo } from "./Icons";
 import { t } from "@/i18n/strings";
 import { locCategory } from "@/i18n/content";
-import type { Locale } from "@/i18n/config";
+import { tx, type L, type Locale } from "@/i18n/config";
+import { dealer, telHref } from "@/config/dealer";
 
-const columns = [
-  {
-    titleKey: "footer.col.company",
-    links: [
-      { key: "link.aboutSany", href: "/about" },
-      { key: "link.newsroom", href: "/news" },
-      { key: "link.sustainability", href: "/about#sustainability" },
-      { key: "link.careers", href: "/about#careers" },
-      { key: "link.investors", href: "/about#investors" },
-    ],
-  },
-  {
-    titleKey: "footer.col.support",
-    links: [
-      { key: "link.serviceParts", href: "/service" },
-      { key: "link.findDealer", href: "/contact" },
-      { key: "link.financing", href: "/service#financing" },
-      { key: "link.training", href: "/service#training" },
-      { key: "link.warranty", href: "/service#warranty" },
-    ],
-  },
+const serviceLinks: { label: L; href: string }[] = [
+  { label: { ru: "Сервис и ремонт", en: "Service & repair", zh: "服务与维修" }, href: "/service" },
+  { label: { ru: "Запчасти", en: "Spare parts", zh: "配件" }, href: "/service#parts" },
+  { label: { ru: "Гарантия", en: "Warranty", zh: "质保" }, href: "/service#warranty" },
+  { label: { ru: "О компании", en: "About us", zh: "关于我们" }, href: "/about" },
+  { label: { ru: "Контакты", en: "Contacts", zh: "联系方式" }, href: "/contact" },
 ];
+
+const labels = {
+  contacts: { ru: "Контакты", en: "Contacts", zh: "联系方式" } as L,
+  cta: { ru: "Готовы подобрать технику?", en: "Ready to choose your machine?", zh: "准备好选购设备了吗？" } as L,
+  ctaBody: {
+    ru: "Свяжитесь с нами — поможем подобрать технику SANY, рассчитаем стоимость и организуем сервис.",
+    en: "Get in touch — we will help you choose the right SANY machine, quote it and arrange service.",
+    zh: "联系我们——我们将帮您选择合适的 SANY 设备、报价并安排服务。",
+  } as L,
+  rights: {
+    ru: "© 2026 SANY Кыргызстан. Официальный дилер техники SANY.",
+    en: "© 2026 SANY Kyrgyzstan. Authorized SANY equipment dealer.",
+    zh: "© 2026 SANY 吉尔吉斯斯坦。SANY 设备授权经销商。",
+  } as L,
+  intro: {
+    ru: "Официальный дилер техники SANY в Кыргызстане: продажа, сервис, оригинальные запчасти и поддержка клиентов по всей стране.",
+    en: "Authorized SANY equipment dealer in Kyrgyzstan: sales, service, genuine parts and customer support nationwide.",
+    zh: "SANY 在吉尔吉斯斯坦的授权经销商：全国范围的销售、服务、原厂配件与客户支持。",
+  } as L,
+};
 
 export function Footer({ locale }: { locale: Locale }) {
   return (
@@ -34,36 +40,24 @@ export function Footer({ locale }: { locale: Locale }) {
       <div className="border-b border-white/10">
         <div className="container-max grid gap-6 py-14 md:grid-cols-[1fr_auto] md:items-center">
           <div>
-            <h3 className="text-2xl font-bold md:text-3xl">{t("footer.ctaTitle", locale)}</h3>
-            <p className="mt-2 max-w-xl text-white/65">{t("footer.ctaBody", locale)}</p>
+            <h3 className="text-2xl font-bold md:text-3xl">{tx(labels.cta, locale)}</h3>
+            <p className="mt-2 max-w-xl text-white/65">{tx(labels.ctaBody, locale)}</p>
           </div>
           <div className="flex flex-wrap gap-3">
             <Link href="/contact" className="btn btn-primary">
-              {t("cta.contactSales", locale)} <Icon.ArrowRight size={16} />
+              {t("cta.requestQuote", locale)} <Icon.ArrowRight size={16} />
             </Link>
-            <Link href="/products" className="btn btn-ghost !text-white !border-white/25 hover:!bg-white/10">
-              {t("cta.browseProducts", locale)}
-            </Link>
+            <a href={telHref(dealer.phones[0])} className="btn btn-ghost !text-white !border-white/25 hover:!bg-white/10">
+              <Icon.Phone size={16} /> {dealer.phones[0]}
+            </a>
           </div>
         </div>
       </div>
 
-      <div className="container-max grid gap-10 py-14 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+      <div className="container-max grid gap-10 py-14 lg:grid-cols-[1.4fr_1fr_1.2fr]">
         <div>
-          <Logo light />
-          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">{t("footer.intro", locale)}</p>
-          <div className="mt-5 flex gap-3">
-            {["in", "X", "f", "▶"].map((s) => (
-              <a
-                key={s}
-                href="#"
-                aria-label="Social"
-                className="grid h-9 w-9 place-items-center rounded-lg border border-white/15 text-sm text-white/70 transition-colors hover:border-brand hover:bg-brand hover:text-white"
-              >
-                {s}
-              </a>
-            ))}
-          </div>
+          <Logo light country={tx(dealer.country, locale)} />
+          <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">{tx(labels.intro, locale)}</p>
         </div>
 
         <div>
@@ -84,31 +78,47 @@ export function Footer({ locale }: { locale: Locale }) {
           </ul>
         </div>
 
-        {columns.map((col) => (
-          <div key={col.titleKey}>
-            <h4 className="text-sm font-semibold text-white/90">{t(col.titleKey, locale)}</h4>
-            <ul className="mt-4 space-y-2.5 text-sm">
-              {col.links.map((l) => (
-                <li key={l.key}>
-                  <Link href={l.href} className="text-white/60 transition-colors hover:text-white">
-                    {t(l.key, locale)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        <div>
+          <h4 className="text-sm font-semibold text-white/90">{tx(labels.contacts, locale)}</h4>
+          <ul className="mt-4 space-y-3 text-sm text-white/70">
+            <li className="flex items-start gap-2.5">
+              <Icon.Pin size={16} className="mt-0.5 shrink-0 text-brand" />
+              <span>{tx(dealer.address, locale)}, {tx(dealer.city, locale)}</span>
+            </li>
+            {dealer.phones.map((p) => (
+              <li key={p} className="flex items-center gap-2.5">
+                <Icon.Phone size={16} className="shrink-0 text-brand" />
+                <a href={telHref(p)} className="hover:text-white">{p}</a>
+              </li>
+            ))}
+            <li className="flex items-center gap-2.5">
+              <Icon.Mail size={16} className="shrink-0 text-brand" />
+              <a href={`mailto:${dealer.email}`} className="hover:text-white">{dealer.email}</a>
+            </li>
+            <li className="flex items-center gap-2.5 text-white/50">
+              <Icon.Spec size={16} className="shrink-0 text-brand" />
+              {tx(dealer.hours, locale)}
+            </li>
+          </ul>
+          <div className="mt-5 flex gap-3">
+            {["in", "f", "▶"].map((s) => (
+              <a
+                key={s}
+                href="#"
+                aria-label="Social"
+                className="grid h-9 w-9 place-items-center rounded-lg border border-white/15 text-sm text-white/70 transition-colors hover:border-brand hover:bg-brand hover:text-white"
+              >
+                {s}
+              </a>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
 
       <div className="border-t border-white/10">
         <div className="container-max flex flex-col gap-3 py-6 text-[13px] text-white/50 md:flex-row md:items-center md:justify-between">
-          <p>{t("footer.rights", locale)}</p>
-          <div className="flex flex-wrap gap-5">
-            <Link href="/about" className="hover:text-white">{t("link.privacy", locale)}</Link>
-            <Link href="/about" className="hover:text-white">{t("link.terms", locale)}</Link>
-            <Link href="/about" className="hover:text-white">{t("link.cookies", locale)}</Link>
-            <Link href="/contact" className="hover:text-white">{t("link.globalNetwork", locale)}</Link>
-          </div>
+          <p>{tx(labels.rights, locale)}</p>
+          <p>{t("brand.slogan", locale)}</p>
         </div>
       </div>
     </footer>

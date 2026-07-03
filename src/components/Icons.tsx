@@ -125,6 +125,27 @@ export const categoryPaths: Record<string, React.ReactNode> = {
       <path d="M11 12.2c-2.1 2-3 4.2-2.6 6.7 2.2-1.6 3.1-3.7 2.6-6.7z" />
     </>
   ),
+  // dealer service icons
+  wrench: (
+    <>
+      <path d="M15.2 6.3a4 4 0 0 0-5.3 5.3L4 17l3 3 5.4-5.4a4 4 0 0 0 5.3-5.3l-2.4 2.4-2.1-.6-.6-2.1z" />
+    </>
+  ),
+  parts: (
+    <>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1" />
+    </>
+  ),
+  delivery: (
+    <>
+      <path d="M2 17h1V7h11v10" />
+      <path d="M14 10h4l3 3v4h-2" />
+      <path d="M14 17h-3" />
+      <circle cx="7" cy="18" r="1.8" />
+      <circle cx="17" cy="18" r="1.8" />
+    </>
+  ),
   // industry / value-prop
   chip: (
     <>
@@ -281,7 +302,15 @@ export const Icon = {
 
 // ---------- Brand wordmark ----------
 
-export function Logo({ light = false, className = "" }: { light?: boolean; className?: string }) {
+export function Logo({
+  light = false,
+  className = "",
+  country,
+}: {
+  light?: boolean;
+  className?: string;
+  country?: string;
+}) {
   return (
     <span className={`inline-flex items-center gap-2 ${className}`}>
       <span
@@ -297,11 +326,13 @@ export function Logo({ light = false, className = "" }: { light?: boolean; class
       >
         三
       </span>
-      <span
-        className="text-[20px] font-extrabold tracking-tight"
-        style={{ color: light ? "#fff" : "var(--color-ink)" }}
-      >
-        SANY
+      <span className="leading-none">
+        <span
+          className="block text-[19px] font-extrabold tracking-tight"
+          style={{ color: light ? "#fff" : "var(--color-ink)" }}
+        >
+          SANY{country ? <span className="font-semibold text-brand"> {country}</span> : null}
+        </span>
       </span>
     </span>
   );

@@ -6,8 +6,17 @@ import type { L, Locale } from "./config";
 
 const S: Record<string, L> = {
   // ---- common ----
-  "brand.slogan": { ru: "«Качество меняет мир»", en: "\"Quality Changes the World\"", zh: "「品质改变世界」" },
-  "cta.getQuote": { ru: "Запросить цену", en: "Get a quote", zh: "获取报价" },
+  "brand.slogan": {
+    ru: "Дилер техники SANY в Кыргызстане",
+    en: "Authorized SANY equipment dealer in Kyrgyzstan",
+    zh: "SANY 吉尔吉斯斯坦授权经销商",
+  },
+  "dealer.subtitle": {
+    ru: "Дилер техники SANY в Кыргызстане",
+    en: "SANY equipment dealer in Kyrgyzstan",
+    zh: "SANY 吉尔吉斯斯坦设备经销商",
+  },
+  "cta.getQuote": { ru: "Запросить КП", en: "Get a quote", zh: "获取报价" },
   "cta.requestQuote": { ru: "Запросить КП", en: "Request a quote", zh: "索取报价" },
   "cta.contactSales": { ru: "Связаться с продажами", en: "Contact sales", zh: "联系销售" },
   "cta.contactSupport": { ru: "Связаться с поддержкой", en: "Contact support", zh: "联系支持" },
@@ -51,16 +60,16 @@ const S: Record<string, L> = {
 
   // ---- hero ----
   "hero.badge": {
-    ru: "Мировой лидер в строительной и промышленной технике",
-    en: "World-leading construction & industrial equipment",
-    zh: "全球领先的工程与工业装备",
+    ru: "Официальный дилер SANY в Кыргызстане",
+    en: "Authorized SANY dealer in Kyrgyzstan",
+    zh: "SANY 吉尔吉斯斯坦授权经销商",
   },
-  "hero.titleTop": { ru: "Техника, которая", en: "Machines that", zh: "驱动世界的" },
-  "hero.titleAccent": { ru: "двигает мир", en: "move the world", zh: "钢铁力量" },
+  "hero.titleTop": { ru: "Техника SANY", en: "SANY equipment", zh: "SANY 工程机械" },
+  "hero.titleAccent": { ru: "в Кыргызстане", en: "in Kyrgyzstan", zh: "在吉尔吉斯斯坦" },
   "hero.subcopy": {
-    ru: "От мини-экскаваторов 1,6 т до гусеничных кранов 4000 т и бетононасосов с вылетом 86 м — изучите полный модельный ряд SANY, созданный ради производительности, экономичности и минимальной стоимости владения.",
-    en: "From 1.6-tonne mini excavators to 4 000-tonne crawler cranes and 86-metre boom pumps — explore the complete SANY range, engineered for performance, efficiency and the lowest total cost of ownership.",
-    zh: "从 1.6 吨迷你挖掘机到 4000 吨履带起重机和 86 米臂架泵车——探索 SANY 完整产品线，为高性能、高效率和最低使用成本而生。",
+    ru: "Продажа, гарантийный и постгарантийный сервис, оригинальные запчасти и выезд специалистов по всему Кыргызстану. Экскаваторы, краны, бетонная и дорожная техника SANY — со склада и под заказ.",
+    en: "Sales, warranty and post-warranty service, genuine spare parts and on-site support across Kyrgyzstan. SANY excavators, cranes, concrete and road machinery — in stock and to order.",
+    zh: "在吉尔吉斯斯坦全境提供销售、保修与保外服务、原厂配件及现场支持。SANY 挖掘机、起重机、混凝土与路面机械——现货及订购。",
   },
   "hero.exploreProducts": { ru: "Смотреть каталог", en: "Explore products", zh: "浏览产品" },
   "hero.nowViewing": { ru: "Сейчас смотрите", en: "Now viewing", zh: "正在查看" },
@@ -86,12 +95,12 @@ const S: Record<string, L> = {
   },
 
   // ---- home: why ----
-  "home.why.eyebrow": { ru: "Почему SANY", en: "Why SANY", zh: "为何选择 SANY" },
-  "home.why.title": { ru: "Преимущество на каждом этапе", en: "Engineered advantage, end to end", zh: "从头到尾的工程优势" },
+  "home.why.eyebrow": { ru: "Почему мы", en: "Why us", zh: "为何选择我们" },
+  "home.why.title": { ru: "Официальный дилер, а не просто продавец", en: "An authorized dealer, not just a seller", zh: "授权经销商，而不仅是卖家" },
   "home.why.intro": {
-    ru: "От «маячковых» заводов до сервисной сети в 180+ странах — всё создано, чтобы ваш бизнес работал без простоев.",
-    en: "From lighthouse factories to a service network spanning 180+ countries, everything is built to keep your operation productive.",
-    zh: "从灯塔工厂到覆盖 180 多个国家的服务网络，一切只为让您的作业高效不停歇。",
+    ru: "Покупая у нас, вы получаете технику SANY с гарантией, сервис силами обученных инженеров, оригинальные запчасти и поддержку по всему Кыргызстану.",
+    en: "Buy from us and you get SANY machines with warranty, service by trained engineers, genuine parts and support across Kyrgyzstan.",
+    zh: "在我们这里购买，您将获得带质保的 SANY 设备、专业工程师服务、原厂配件以及覆盖全吉尔吉斯斯坦的支持。",
   },
   "home.why.about": { ru: "О компании SANY", en: "About SANY", zh: "关于 SANY" },
   "home.why.service": { ru: "Сервис и поддержка", en: "Service & support", zh: "服务与支持" },
@@ -154,9 +163,9 @@ const S: Record<string, L> = {
     zh: "与 SANY 专家探讨适合您运营的设备、金融方案与售后支持。",
   },
   "footer.intro": {
-    ru: "Один из мировых лидеров в производстве строительной и промышленной техники, обслуживающий клиентов более чем в 180 странах и регионах.",
-    en: "One of the world's leading manufacturers of construction and industrial equipment, serving customers in more than 180 countries and regions.",
-    zh: "全球领先的工程与工业装备制造商之一，服务遍及 180 多个国家和地区的客户。",
+    ru: "Официальный дилер техники SANY в Кыргызстане: продажа, сервис, оригинальные запчасти и поддержка клиентов по всей стране.",
+    en: "Authorized SANY equipment dealer in Kyrgyzstan: sales, service, genuine parts and customer support nationwide.",
+    zh: "SANY 在吉尔吉斯斯坦的授权经销商：全国范围的销售、服务、原厂配件与客户支持。",
   },
   "footer.col.products": { ru: "Продукция", en: "Products", zh: "产品" },
   "footer.col.company": { ru: "Компания", en: "Company", zh: "公司" },

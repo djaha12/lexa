@@ -1,18 +1,78 @@
 import Link from "next/link";
 import { Hero } from "@/components/Hero";
-import { Stats } from "@/components/Stats";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading, ArrowLink } from "@/components/ui";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductVisual } from "@/components/ProductVisual";
 import { CategoryIcon, Icon } from "@/components/Icons";
 import { categories, featuredModels, modelsInCategory } from "@/data/products";
-import { valueProps, industries, news, regions } from "@/data/site";
+import { industries } from "@/data/site";
 import { accent } from "@/lib/theme";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
+import { tx, type L } from "@/i18n/config";
 import { locCategory } from "@/i18n/content";
-import { locValueProp, locIndustry, locNews, locRegion } from "@/i18n/site";
+import { locIndustry } from "@/i18n/site";
+import { dealer, telHref } from "@/config/dealer";
+
+const dealerStats: { value: string; suffix?: string; label: L }[] = [
+  { value: "10", label: { ru: "категорий техники SANY", en: "SANY equipment categories", zh: "SANY 设备类别" } },
+  { value: "24/7", label: { ru: "сервис и выезд", en: "service & field support", zh: "服务与上门" } },
+  { value: "100", suffix: "%", label: { ru: "оригинальные запчасти", en: "genuine spare parts", zh: "原厂配件" } },
+  { value: "КР", label: { ru: "поставка по всему Кыргызстану", en: "delivery across Kyrgyzstan", zh: "全吉尔吉斯斯坦配送" } },
+];
+
+const why: { icon: string; title: L; body: L }[] = [
+  {
+    icon: "shield",
+    title: { ru: "Официальный дилер", en: "Authorized dealer", zh: "授权经销商" },
+    body: {
+      ru: "Прямые поставки техники SANY и гарантия производителя на каждую машину.",
+      en: "Direct SANY supply and manufacturer warranty on every machine.",
+      zh: "SANY 直供，每台设备均享厂家质保。",
+    },
+  },
+  {
+    icon: "wrench",
+    title: { ru: "Сервис и ремонт", en: "Service & repair", zh: "服务与维修" },
+    body: {
+      ru: "Обученные инженеры, плановое ТО и ремонт любой сложности.",
+      en: "Trained engineers, scheduled maintenance and repairs of any complexity.",
+      zh: "专业工程师，定期保养及各类维修。",
+    },
+  },
+  {
+    icon: "parts",
+    title: { ru: "Оригинальные запчасти", en: "Genuine spare parts", zh: "原厂配件" },
+    body: {
+      ru: "Склад расходников и узлов, быстрый подбор и поставка под заказ.",
+      en: "Stock of consumables and components, fast lookup and supply to order.",
+      zh: "备有易损件与总成，快速匹配与订购供应。",
+    },
+  },
+  {
+    icon: "delivery",
+    title: { ru: "Выезд по всему КР", en: "On-site across Kyrgyzstan", zh: "全吉尔吉斯斯坦上门" },
+    body: {
+      ru: "Диагностика и обслуживание техники прямо на вашем объекте.",
+      en: "Diagnostics and servicing directly at your jobsite.",
+      zh: "在您的工地现场进行诊断与维护。",
+    },
+  },
+];
+
+const visitL = {
+  eyebrow: { ru: "Приезжайте к нам", en: "Visit us", zh: "欢迎到访" } as L,
+  title: { ru: "Наш филиал в Бишкеке", en: "Our branch in Bishkek", zh: "我们在比什凯克的分公司" } as L,
+  intro: {
+    ru: "Приезжайте посмотреть технику, обсудить условия и сервис. Работаем с частными клиентами и компаниями по всему Кыргызстану.",
+    en: "Come to see the machines, discuss terms and service. We work with private customers and companies across Kyrgyzstan.",
+    zh: "欢迎前来看机、洽谈条件与服务。我们服务于吉尔吉斯斯坦全境的个人与企业客户。",
+  } as L,
+  branch: { ru: "Филиал", en: "Branch", zh: "分公司" } as L,
+  phone: { ru: "Телефоны", en: "Phone", zh: "电话" } as L,
+  hours: { ru: "Часы работы", en: "Opening hours", zh: "营业时间" } as L,
+};
 
 export default async function Home() {
   const locale = await getLocale();
@@ -21,10 +81,18 @@ export default async function Home() {
     <>
       <Hero />
 
-      {/* STATS */}
+      {/* DEALER STATS */}
       <section className="border-b border-line bg-white">
-        <div className="container-max py-14">
-          <Stats />
+        <div className="container-max grid grid-cols-2 gap-8 py-14 md:grid-cols-4">
+          {dealerStats.map((s) => (
+            <div key={tx(s.label, locale)}>
+              <div className="text-4xl font-extrabold tracking-tight text-ink md:text-5xl">
+                {s.value}
+                {s.suffix && <span className="text-brand">{s.suffix}</span>}
+              </div>
+              <p className="mt-2 text-sm text-steel">{tx(s.label, locale)}</p>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -94,7 +162,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* WHY SANY */}
+      {/* WHY US */}
       <section className="section-pad bg-paper">
         <div className="container-max grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
           <Reveal>
@@ -104,8 +172,8 @@ export default async function Home() {
               intro={t("home.why.intro", locale)}
             />
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/about" className="btn btn-dark">
-                {t("home.why.about", locale)} <Icon.ArrowRight size={16} />
+              <Link href="/contact" className="btn btn-dark">
+                {t("cta.requestQuote", locale)} <Icon.ArrowRight size={16} />
               </Link>
               <Link href="/service" className="btn btn-ghost">
                 {t("home.why.service", locale)}
@@ -113,68 +181,18 @@ export default async function Home() {
             </div>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2">
-            {valueProps.map((v, idx) => {
-              const lv = locValueProp(v.icon, locale, { title: v.title, body: v.body });
-              return (
-                <Reveal key={v.title} delay={idx * 70}>
-                  <div className="card h-full p-6">
-                    <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand">
-                      <CategoryIcon name={v.icon} size={22} />
-                    </span>
-                    <h3 className="mt-4 text-lg font-bold text-ink">{lv.title}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-steel">{lv.body}</p>
-                  </div>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* NEW ENERGY SPOTLIGHT */}
-      <section className="relative overflow-hidden bg-ink text-white">
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              "radial-gradient(900px 500px at 85% 0%, rgba(52,211,153,.22) 0%, transparent 60%), radial-gradient(700px 400px at 0% 100%, rgba(230,0,18,.18) 0%, transparent 60%)",
-          }}
-        />
-        <div className="grain absolute inset-0 -z-10 opacity-50" aria-hidden />
-        <div className="container-max grid gap-12 py-20 md:py-28 lg:grid-cols-2 lg:items-center">
-          <Reveal>
-            <span className="eyebrow !text-emerald-300">{t("home.energy.eyebrow", locale)}</span>
-            <h2 className="mt-3 text-3xl font-bold leading-tight md:text-[2.6rem]">{t("home.energy.title", locale)}</h2>
-            <p className="mt-4 max-w-lg text-lg leading-relaxed text-white/70">{t("home.energy.intro", locale)}</p>
-            <ul className="mt-6 space-y-3">
-              {["home.energy.b1", "home.energy.b2", "home.energy.b3"].map((k) => (
-                <li key={k} className="flex items-center gap-3 text-white/80">
-                  <span className="grid h-6 w-6 place-items-center rounded-full bg-emerald-500/20 text-emerald-300">
-                    <Icon.Check size={14} />
+            {why.map((v, idx) => (
+              <Reveal key={v.icon} delay={idx * 70}>
+                <div className="card h-full p-6">
+                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-soft text-brand">
+                    <CategoryIcon name={v.icon} size={22} />
                   </span>
-                  {t(k, locale)}
-                </li>
-              ))}
-            </ul>
-            <Link href="/solutions#new-energy" className="btn btn-primary mt-8">
-              {t("home.energy.cta", locale)} <Icon.ArrowRight size={16} />
-            </Link>
-          </Reveal>
-          <Reveal delay={120}>
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { k: "422 kWh", v: "home.energy.s1" },
-                { k: "0 g", v: "home.energy.s2" },
-                { k: "24/7", v: "home.energy.s3" },
-                { k: "15 MW", v: "home.energy.s4" },
-              ].map((s) => (
-                <div key={s.v} className="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                  <div className="text-3xl font-extrabold text-emerald-300">{s.k}</div>
-                  <p className="mt-1 text-sm text-white/60">{t(s.v, locale)}</p>
+                  <h3 className="mt-4 text-lg font-bold text-ink">{tx(v.title, locale)}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-steel">{tx(v.body, locale)}</p>
                 </div>
-              ))}
-            </div>
-          </Reveal>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -192,7 +210,7 @@ export default async function Home() {
               const li = locIndustry(ind.name, locale, ind.blurb);
               return (
                 <Reveal key={ind.name} delay={(idx % 3) * 70}>
-                  <Link href="/solutions" className="card card-hover group flex items-center gap-4 p-5">
+                  <Link href="/products" className="card card-hover group flex items-center gap-4 p-5">
                     <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-paper text-ink transition-colors group-hover:bg-brand group-hover:text-white">
                       <CategoryIcon name={ind.icon} size={24} />
                     </span>
@@ -208,84 +226,74 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* NEWS */}
+      {/* VISIT / CONTACTS */}
       <section className="section-pad bg-paper">
-        <div className="container-max">
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <SectionHeading eyebrow={t("home.news.eyebrow", locale)} title={t("home.news.title", locale)} />
-            <ArrowLink href="/news" className="mb-2">
-              {t("home.news.all", locale)}
-            </ArrowLink>
-          </div>
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {news.map((n, idx) => {
-              const ln = locNews(n.slug, locale, { title: n.title, excerpt: n.excerpt, tag: n.tag });
-              return (
-                <Reveal key={n.slug} delay={(idx % 4) * 70}>
-                  <Link href={`/news/${n.slug}`} className="card card-hover group flex h-full flex-col overflow-hidden">
-                    <ProductVisual accentKey={n.accent} icon="chip" className="aspect-[16/10]" rounded="rounded-none" intensity="soft" />
-                    <div className="flex flex-1 flex-col p-5">
-                      <div className="flex items-center gap-2 text-xs text-mist">
-                        <span className="font-semibold uppercase tracking-wide text-brand">{ln.tag}</span>
-                        <span>·</span>
-                        <time>{new Date(n.date).toLocaleDateString(locale, { month: "short", day: "numeric", year: "numeric" })}</time>
-                      </div>
-                      <h3 className="mt-2 flex-1 text-[15px] font-bold leading-snug text-ink group-hover:text-brand">{ln.title}</h3>
-                    </div>
-                  </Link>
-                </Reveal>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* GLOBAL PRESENCE */}
-      <section className="section-pad bg-white">
         <div className="container-max grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center">
           <Reveal>
-            <SectionHeading
-              eyebrow={t("home.global.eyebrow", locale)}
-              title={t("home.global.title", locale)}
-              intro={t("home.global.intro", locale)}
-            />
-            <div className="mt-8 grid grid-cols-2 gap-3">
-              {regions.map((r) => {
-                const lr = locRegion(r.name, locale, r.note);
-                return (
-                  <div key={r.name} className="rounded-xl border border-line p-4">
-                    <div className="flex items-center gap-2 font-semibold text-ink">
-                      <Icon.Pin size={16} className="text-brand" />
-                      {lr.name}
-                    </div>
-                    <p className="mt-1 text-sm text-steel">{lr.note}</p>
+            <SectionHeading eyebrow={tx(visitL.eyebrow, locale)} title={tx(visitL.title, locale)} intro={tx(visitL.intro, locale)} />
+            <div className="mt-8 space-y-4">
+              <div className="flex items-start gap-3">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand">
+                  <Icon.Pin size={20} />
+                </span>
+                <div>
+                  <div className="text-sm text-mist">{tx(visitL.branch, locale)}</div>
+                  <div className="font-semibold text-ink">{tx(dealer.address, locale)}, {tx(dealer.city, locale)}</div>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand">
+                  <Icon.Phone size={20} />
+                </span>
+                <div>
+                  <div className="text-sm text-mist">{tx(visitL.phone, locale)}</div>
+                  <div className="flex flex-wrap gap-x-4 font-semibold text-ink">
+                    {dealer.phones.map((p) => (
+                      <a key={p} href={telHref(p)} className="hover:text-brand">{p}</a>
+                    ))}
                   </div>
-                );
-              })}
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft text-brand">
+                  <Icon.Spec size={20} />
+                </span>
+                <div>
+                  <div className="text-sm text-mist">{tx(visitL.hours, locale)}</div>
+                  <div className="font-semibold text-ink">{tx(dealer.hours, locale)}</div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/contact" className="btn btn-primary">
+                {t("cta.requestQuote", locale)} <Icon.ArrowRight size={16} />
+              </Link>
+              <a href={telHref(dealer.phones[0])} className="btn btn-ghost">
+                <Icon.Phone size={16} /> {dealer.phones[0]}
+              </a>
             </div>
           </Reveal>
           <Reveal delay={120}>
             <div className="relative overflow-hidden rounded-3xl bg-ink p-10 text-white">
               <div className="grain absolute inset-0 opacity-40" aria-hidden />
               <div className="relative">
-                <div className="grid grid-cols-3 gap-6">
-                  {[
-                    { k: "180+", v: "home.global.countries" },
-                    { k: "30+", v: "home.global.factories" },
-                    { k: "100k+", v: "home.global.machinesYr" },
-                  ].map((s) => (
-                    <div key={s.v}>
-                      <div className="text-3xl font-extrabold text-brand">{s.k}</div>
-                      <p className="mt-1 text-xs text-white/60">{t(s.v, locale)}</p>
+                <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand text-white">
+                  <CategoryIcon name="shield" size={26} />
+                </span>
+                <h3 className="mt-5 text-2xl font-bold">{t("hero.badge", locale)}</h3>
+                <p className="mt-3 text-white/70">{t("footer.intro", locale)}</p>
+                <div className="mt-6 h-px bg-white/10" />
+                <div className="mt-6 grid grid-cols-3 gap-4">
+                  {dealerStats.slice(0, 3).map((s) => (
+                    <div key={tx(s.label, locale)}>
+                      <div className="text-2xl font-extrabold text-brand">
+                        {s.value}
+                        {s.suffix}
+                      </div>
+                      <p className="mt-1 text-xs text-white/60">{tx(s.label, locale)}</p>
                     </div>
                   ))}
                 </div>
-                <div className="mt-8 h-px bg-white/10" />
-                <p className="mt-6 text-white/70">{t("home.global.quote", locale)}</p>
-                <p className="mt-3 text-sm font-semibold">{t("home.global.quoteAuthor", locale)}</p>
-                <Link href="/contact" className="btn btn-white mt-8">
-                  {t("home.global.findTeam", locale)} <Icon.ArrowRight size={16} />
-                </Link>
               </div>
             </div>
           </Reveal>
