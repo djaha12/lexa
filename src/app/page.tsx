@@ -14,7 +14,7 @@ import { locIndustry } from "@/i18n/site";
 import { dealer } from "@/config/dealer";
 
 const dealerStats: { value: string; suffix?: string; label: L }[] = [
-  { value: "10", label: { ru: "категорий техники SANY", en: "SANY equipment categories", zh: "SANY 设备类别" } },
+  { value: "7", label: { ru: "категорий техники SANY", en: "SANY equipment categories", zh: "SANY 设备类别" } },
   { value: "24/7", label: { ru: "сервис и выезд", en: "service & field support", zh: "服务与上门" } },
   { value: "100", suffix: "%", label: { ru: "оригинальные запчасти", en: "genuine spare parts", zh: "原厂配件" } },
   { value: "КР", label: { ru: "поставка по всему Кыргызстану", en: "delivery across Kyrgyzstan", zh: "全吉尔吉斯斯坦配送" } },

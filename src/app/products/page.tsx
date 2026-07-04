@@ -15,7 +15,7 @@ import { imageForProduct } from "@/config/images";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Browse the complete SANY product range — excavators, concrete machinery, cranes, road, port, mining and piling machinery, trucks, access platforms and renewable energy.",
+    "SANY equipment range in Kyrgyzstan — excavators, concrete machinery, cranes, road machinery, mining and piling machinery, and trucks.",
 };
 
 export default async function ProductsPage() {

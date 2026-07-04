@@ -30,9 +30,9 @@ const doCards: { icon: string; title: L; body: L }[] = [
     icon: "excavator",
     title: { ru: "Продажа техники", en: "Equipment sales", zh: "设备销售" },
     body: {
-      ru: "Экскаваторы, краны, бетонная, дорожная и портовая техника SANY — со склада и под заказ.",
-      en: "SANY excavators, cranes, concrete, road and port machinery — in stock and to order.",
-      zh: "SANY 挖掘机、起重机、混凝土、路面与港口机械——现货及订购。",
+      ru: "Экскаваторы, краны, бетонная, дорожная и карьерная техника SANY — со склада и под заказ.",
+      en: "SANY excavators, cranes, concrete, road and mining machinery — in stock and to order.",
+      zh: "SANY 挖掘机、起重机、混凝土、路面与矿山机械——现货及订购。",
     },
   },
   {

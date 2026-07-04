@@ -65,7 +65,7 @@ export function Footer({ locale }: { locale: Locale }) {
         <div>
           <h4 className="text-sm font-semibold text-white/90">{t("footer.col.products", locale)}</h4>
           <ul className="mt-4 space-y-2.5 text-sm">
-            {categories.slice(0, 6).map((c) => (
+            {categories.slice(0, 7).map((c) => (
               <li key={c.slug}>
                 <Link href={`/products/${c.slug}`} className="text-white/60 transition-colors hover:text-white">
                   {locCategory(c, locale).name}
