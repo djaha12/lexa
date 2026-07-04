@@ -46,8 +46,6 @@ export const industries: { name: string; blurb: string; icon: string }[] = [
   { name: "Building Construction", blurb: "From foundations to finishing.", icon: "concrete" },
   { name: "Infrastructure", blurb: "Roads, bridges, rail & utilities.", icon: "roller" },
   { name: "Mining & Quarrying", blurb: "Lowest cost per tonne.", icon: "mining" },
-  { name: "Energy & Wind", blurb: "Powering the clean transition.", icon: "wind" },
-  { name: "Ports & Logistics", blurb: "Moving the world's cargo.", icon: "port" },
   { name: "Municipal & Utility", blurb: "Building better cities.", icon: "excavator" },
 ];
 

@@ -144,7 +144,7 @@ export default async function Home() {
             intro={t("home.ind.intro", locale)}
             align="center"
           />
-          <div className="mx-auto mt-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mx-auto mt-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {industries.map((ind, idx) => {
               const li = locIndustry(ind.name, locale, ind.blurb);
               return (

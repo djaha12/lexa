@@ -41,7 +41,7 @@ export type Category = {
 //  CATEGORIES
 // ------------------------------------------------------------
 
-export const categories: Category[] = [
+const categoriesAll: Category[] = [
   {
     slug: "excavator",
     name: "Excavators",
@@ -209,7 +209,7 @@ export const categories: Category[] = [
 
 const M = (m: Model): Model => m;
 
-export const models: Model[] = [
+const modelsAll: Model[] = [
   // ===== MINI EXCAVATORS =====
   M({
     slug: "sy16c", name: "SY16C", tagline: "1.75 t micro excavator with retractable undercarriage",
@@ -1117,6 +1117,22 @@ export const models: Model[] = [
       "SANY's liquid-cooled battery energy-storage system stabilises grids and firms renewable output, packing high capacity into a safe, modular container with intelligent energy management.",
   }),
 ];
+
+// ------------------------------------------------------------
+//  Active catalogue — hide categories the dealer doesn't carry.
+//  Everything (nav, footer, search, category pages, generated PDF)
+//  reads the filtered arrays, so removing a slug here syncs the
+//  whole site and the catalogue at once.
+// ------------------------------------------------------------
+
+const HIDDEN_CATEGORIES = new Set<string>([
+  "port-machinery",
+  "aerial-work-platform",
+  "renewable-energy",
+]);
+
+export const categories: Category[] = categoriesAll.filter((c) => !HIDDEN_CATEGORIES.has(c.slug));
+export const models: Model[] = modelsAll.filter((m) => !HIDDEN_CATEGORIES.has(m.categorySlug));
 
 // ------------------------------------------------------------
 //  DERIVED HELPERS
