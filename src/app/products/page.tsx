@@ -10,6 +10,7 @@ import { accent } from "@/lib/theme";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
 import { locCategory, locTagline } from "@/i18n/content";
+import { imageForProduct } from "@/config/images";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -84,7 +85,13 @@ export default async function ProductsPage() {
                           href={`/products/${c.slug}/${m.slug}`}
                           className="card card-hover group flex h-full flex-col overflow-hidden"
                         >
-                          <ProductVisual accentKey={m.accent} icon={c.icon} className="aspect-[16/10]" rounded="rounded-none" />
+                          <ProductVisual
+                            accentKey={m.accent}
+                            icon={c.icon}
+                            image={imageForProduct(m)}
+                            className="aspect-[16/10]"
+                            rounded="rounded-none"
+                          />
                           <div className="flex flex-1 flex-col p-4">
                             <h3 className="text-base font-bold text-ink group-hover:text-brand">{m.name}</h3>
                             <p className="mt-1 line-clamp-2 text-[13px] leading-snug text-steel">{locTagline(m, locale)}</p>

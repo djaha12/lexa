@@ -115,22 +115,3 @@ export const timeline: { year: string; title: string; body: string }[] = [
   { year: "2024", title: "New-energy era", body: "Electrification across trucks, excavators and mining." },
 ];
 
-export const nav: {
-  label: string;
-  href: string;
-}[] = [
-  { label: "Products", href: "/products" },
-  { label: "Solutions", href: "/solutions" },
-  { label: "Service", href: "/service" },
-  { label: "About", href: "/about" },
-  { label: "Newsroom", href: "/news" },
-  { label: "Contact", href: "/contact" },
-];
-
-export const languages = [
-  { code: "en", label: "English" },
-  { code: "zh", label: "中文" },
-  { code: "ru", label: "Русский" },
-  { code: "es", label: "Español" },
-  { code: "ar", label: "العربية" },
-];

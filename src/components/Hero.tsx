@@ -8,6 +8,7 @@ import { accent } from "@/lib/theme";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { t } from "@/i18n/strings";
 import { locCategory } from "@/i18n/content";
+import { siteImages } from "@/config/images";
 
 export function Hero() {
   const { locale } = useLocale();
@@ -21,13 +22,31 @@ export function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-ink text-white">
       {/* background layers */}
-      <div
-        className="absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(1200px 600px at 78% -10%, #2a3140 0%, transparent 55%), radial-gradient(900px 500px at 10% 110%, rgba(230,0,18,.22) 0%, transparent 60%), linear-gradient(180deg,#0b0d12 0%,#12151d 100%)",
-        }}
-      />
+      {siteImages.hero ? (
+        <>
+          <div
+            className="absolute inset-0 -z-10 bg-cover bg-center"
+            style={{ backgroundImage: `url(${siteImages.hero})` }}
+            aria-hidden
+          />
+          <div
+            className="absolute inset-0 -z-10"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(11,13,18,.95) 0%, rgba(11,13,18,.82) 45%, rgba(11,13,18,.6) 100%), linear-gradient(180deg, rgba(11,13,18,.15) 0%, rgba(11,13,18,.55) 100%), radial-gradient(900px 500px at 10% 110%, rgba(230,0,18,.18) 0%, transparent 60%)",
+            }}
+            aria-hidden
+          />
+        </>
+      ) : (
+        <div
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(1200px 600px at 78% -10%, #2a3140 0%, transparent 55%), radial-gradient(900px 500px at 10% 110%, rgba(230,0,18,.22) 0%, transparent 60%), linear-gradient(180deg,#0b0d12 0%,#12151d 100%)",
+          }}
+        />
+      )}
       <div className="grain absolute inset-0 -z-10 opacity-60" aria-hidden />
       {/* drifting silhouette */}
       <div

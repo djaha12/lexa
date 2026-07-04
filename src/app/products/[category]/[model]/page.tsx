@@ -8,6 +8,7 @@ import { ProductCard } from "@/components/ProductCard";
 import { CategoryIcon, Icon } from "@/components/Icons";
 import { Breadcrumbs } from "@/components/ui";
 import { accent } from "@/lib/theme";
+import { imageForProduct } from "@/config/images";
 import { getLocale } from "@/i18n/server";
 import { t } from "@/i18n/strings";
 import {
@@ -65,12 +66,21 @@ export default async function ModelPage({ params }: { params: Promise<{ category
 
           <div className="grid grid-cols-1 gap-10 pt-8 pb-12 lg:grid-cols-2 lg:items-center">
             <div>
-              <ProductVisual accentKey={m.accent} icon={cat.icon} className="aspect-[4/3]" rounded="rounded-3xl" />
-              <div className="mt-4 grid grid-cols-4 gap-3">
-                {[0, 1, 2, 3].map((n) => (
-                  <ProductVisual key={n} accentKey={m.accent} icon={cat.icon} className="aspect-square opacity-70" rounded="rounded-xl" />
-                ))}
-              </div>
+              <ProductVisual
+                accentKey={m.accent}
+                icon={cat.icon}
+                image={imageForProduct(m)}
+                alt={m.name}
+                className="aspect-[4/3]"
+                rounded="rounded-3xl"
+              />
+              {!imageForProduct(m) && (
+                <div className="mt-4 grid grid-cols-4 gap-3">
+                  {[0, 1, 2, 3].map((n) => (
+                    <ProductVisual key={n} accentKey={m.accent} icon={cat.icon} className="aspect-square opacity-70" rounded="rounded-xl" />
+                  ))}
+                </div>
+              )}
             </div>
 
             <div>

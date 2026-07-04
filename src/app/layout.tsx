@@ -8,16 +8,16 @@ import type { Locale } from "@/i18n/config";
 
 const meta: Record<Locale, { title: string; desc: string }> = {
   ru: {
-    title: "SANY Global — строительная и промышленная техника",
-    desc: "SANY — один из мировых лидеров в производстве строительной и промышленной техники: экскаваторы, бетонная техника, краны, дорожная, портовая и карьерная техника, решения новой энергетики.",
+    title: "SANY Кыргызстан — техника, сервис и запчасти",
+    desc: "Дилер SANY в Кыргызстане: продажа экскаваторов, кранов, бетонной и дорожной техники, гарантийный и постгарантийный сервис, оригинальные запчасти и выезд по всей стране.",
   },
   en: {
-    title: "SANY Global — Construction & Industrial Equipment",
-    desc: "SANY is one of the world's leading manufacturers of construction and industrial equipment — excavators, concrete machinery, cranes, road, port and mining machinery, and new-energy solutions.",
+    title: "SANY Kyrgyzstan — equipment, service and parts",
+    desc: "SANY dealer in Kyrgyzstan: sales of excavators, cranes, concrete and road machinery, warranty and post-warranty service, genuine spare parts and on-site support nationwide.",
   },
   zh: {
-    title: "SANY Global — 工程与工业装备",
-    desc: "SANY 是全球领先的工程与工业装备制造商之一——挖掘机、混凝土机械、起重机、路面、港口与矿山机械，以及新能源解决方案。",
+    title: "SANY 吉尔吉斯斯坦 — 设备、服务与配件",
+    desc: "SANY 在吉尔吉斯斯坦的经销商：销售挖掘机、起重机、混凝土与路面机械，提供保修与保外服务、原厂配件及全国上门支持。",
   },
 };
 
@@ -25,8 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   const m = meta[locale];
   return {
-    metadataBase: new URL("https://sany-global.example.com"),
-    title: { default: m.title, template: "%s | SANY Global" },
+    metadataBase: new URL("https://sany.kg"),
+    title: { default: m.title, template: "%s | SANY Кыргызстан" },
     description: m.desc,
     openGraph: { title: m.title, description: m.desc, type: "website" },
   };

@@ -7,6 +7,7 @@ import { Icon } from "./Icons";
 import { useLocale } from "@/i18n/LocaleProvider";
 import { t } from "@/i18n/strings";
 import { locCategory } from "@/i18n/content";
+import { dealer, waHref } from "@/config/dealer";
 
 export function ContactForm() {
   const { locale } = useLocale();
@@ -31,6 +32,16 @@ export function ContactForm() {
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    const cat = categories.find((c) => c.slug === form.interest);
+    const parts = [
+      `${t("form.name", locale)}: ${form.name}`,
+      form.company ? `${t("form.company", locale)}: ${form.company}` : "",
+      form.email ? `${t("form.email", locale)}: ${form.email}` : "",
+      cat ? `${t("form.interest", locale)}: ${locCategory(cat, locale).name}` : "",
+      form.message ? `${t("form.message", locale)}: ${form.message}` : "",
+    ].filter(Boolean);
+    const url = `${waHref(dealer.phones[0])}?text=${encodeURIComponent(parts.join("\n"))}`;
+    if (typeof window !== "undefined") window.open(url, "_blank", "noopener");
     setSent(true);
   };
 
@@ -62,13 +73,13 @@ export function ContactForm() {
       )}
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label={t("form.name", locale)} required>
-          <input required value={form.name} onChange={set("name")} className={inputCls} placeholder="Jane Doe" />
+          <input required value={form.name} onChange={set("name")} className={inputCls} />
         </Field>
-        <Field label={t("form.email", locale)} required>
-          <input required type="email" value={form.email} onChange={set("email")} className={inputCls} placeholder="jane@company.com" />
+        <Field label={t("form.email", locale)}>
+          <input type="email" value={form.email} onChange={set("email")} className={inputCls} placeholder="example@mail.com" />
         </Field>
         <Field label={t("form.company", locale)}>
-          <input value={form.company} onChange={set("company")} className={inputCls} placeholder="Company Ltd." />
+          <input value={form.company} onChange={set("company")} className={inputCls} />
         </Field>
         <Field label={t("form.country", locale)}>
           <input value={form.country} onChange={set("country")} className={inputCls} />

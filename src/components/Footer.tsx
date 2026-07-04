@@ -5,7 +5,7 @@ import { PhoneNumbers } from "./PhoneNumbers";
 import { t } from "@/i18n/strings";
 import { locCategory } from "@/i18n/content";
 import { tx, type L, type Locale } from "@/i18n/config";
-import { dealer, telHref } from "@/config/dealer";
+import { dealer, telHref, waHref } from "@/config/dealer";
 
 const serviceLinks: { label: L; href: string }[] = [
   { label: { ru: "Сервис и ремонт", en: "Service & repair", zh: "服务与维修" }, href: "/service" },
@@ -17,6 +17,7 @@ const serviceLinks: { label: L; href: string }[] = [
 
 const labels = {
   contacts: { ru: "Контакты", en: "Contacts", zh: "联系方式" } as L,
+  menu: { ru: "Компания и сервис", en: "Company & service", zh: "公司与服务" } as L,
   cta: { ru: "Готовы подобрать технику?", en: "Ready to choose your machine?", zh: "准备好选购设备了吗？" } as L,
   ctaBody: {
     ru: "Свяжитесь с нами — поможем подобрать технику SANY, рассчитаем стоимость и организуем сервис.",
@@ -55,7 +56,7 @@ export function Footer({ locale }: { locale: Locale }) {
         </div>
       </div>
 
-      <div className="container-max grid gap-10 py-14 lg:grid-cols-[1.4fr_1fr_1.2fr]">
+      <div className="container-max grid gap-10 py-14 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
         <div>
           <Logo light country={tx(dealer.country, locale)} />
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/60">{tx(labels.intro, locale)}</p>
@@ -80,6 +81,19 @@ export function Footer({ locale }: { locale: Locale }) {
         </div>
 
         <div>
+          <h4 className="text-sm font-semibold text-white/90">{tx(labels.menu, locale)}</h4>
+          <ul className="mt-4 space-y-2.5 text-sm">
+            {serviceLinks.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="text-white/60 transition-colors hover:text-white">
+                  {tx(l.label, locale)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
           <h4 className="text-sm font-semibold text-white/90">{tx(labels.contacts, locale)}</h4>
           <ul className="mt-4 space-y-3 text-sm text-white/70">
             <li className="flex items-start gap-2.5">
@@ -95,18 +109,15 @@ export function Footer({ locale }: { locale: Locale }) {
               {tx(dealer.hours, locale)}
             </li>
           </ul>
-          <div className="mt-5 flex gap-3">
-            {["in", "f", "▶"].map((s) => (
-              <a
-                key={s}
-                href="#"
-                aria-label="Social"
-                className="grid h-9 w-9 place-items-center rounded-lg border border-white/15 text-sm text-white/70 transition-colors hover:border-brand hover:bg-brand hover:text-white"
-              >
-                {s}
-              </a>
-            ))}
-          </div>
+          <a
+            href={waHref(dealer.phones[0])}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold text-white transition-transform hover:-translate-y-0.5"
+            style={{ background: "#25D366" }}
+          >
+            <Icon.Whatsapp size={17} /> WhatsApp
+          </a>
         </div>
       </div>
 

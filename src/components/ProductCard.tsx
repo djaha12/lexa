@@ -6,6 +6,7 @@ import { Icon } from "./Icons";
 import { Badge } from "./ui";
 import type { Locale } from "@/i18n/config";
 import { locTagline, locSpecLabel, locUnit, locValue, locBadge } from "@/i18n/content";
+import { imageForProduct } from "@/config/images";
 
 export function ProductCard({
   model,
@@ -26,6 +27,8 @@ export function ProductCard({
         <ProductVisual
           accentKey={model.accent}
           icon={cat?.icon ?? "excavator"}
+          image={imageForProduct(model)}
+          alt={model.name}
           className={compact ? "aspect-[16/10]" : "aspect-[4/3]"}
           rounded="rounded-none"
         />

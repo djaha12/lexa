@@ -10,6 +10,8 @@ export function ProductVisual({
   accentKey,
   icon,
   label,
+  image,
+  alt,
   className = "",
   rounded = "rounded-2xl",
   intensity = "normal",
@@ -17,11 +19,37 @@ export function ProductVisual({
   accentKey: string;
   icon: string;
   label?: string;
+  /** optional real photo — when set, replaces the gradient placeholder */
+  image?: string | null;
+  /** accessible name for the photo (falls back to label, else decorative) */
+  alt?: string;
   className?: string;
   rounded?: string;
   intensity?: "normal" | "soft";
 }) {
   const a = accent(accentKey);
+
+  if (image) {
+    return (
+      <div className={`relative overflow-hidden bg-ink ${rounded} ${className}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={image} alt={alt ?? label ?? ""} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, rgba(11,13,18,0) 55%, rgba(11,13,18,0.35) 100%)" }}
+          aria-hidden
+        />
+        {label && (
+          <div className="absolute bottom-3 left-4 right-4">
+            <span className="inline-block rounded-md bg-black/40 px-2.5 py-1 text-[11px] font-semibold tracking-wide text-white backdrop-blur">
+              {label}
+            </span>
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative overflow-hidden ${rounded} ${className}`}

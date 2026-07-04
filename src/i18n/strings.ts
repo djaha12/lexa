@@ -311,9 +311,9 @@ const S: Record<string, L> = {
   "form.enquiryAbout": { ru: "Запрос по модели", en: "Enquiry about", zh: "咨询机型" },
   "form.thanks": { ru: "Спасибо", en: "Thank you", zh: "谢谢" },
   "form.thanksBody": {
-    ru: "Ваш запрос получен. Представитель SANY скоро свяжется с вами.",
-    en: "Your enquiry has been received. A SANY representative will be in touch shortly to help with your request.",
-    zh: "我们已收到您的咨询。SANY 代表将很快与您联系。",
+    ru: "Мы открыли WhatsApp с вашим запросом — отправьте сообщение, и мы свяжемся с вами. Не открылся? Позвоните нам напрямую.",
+    en: "We opened WhatsApp with your enquiry — send the message and we'll get back to you. Didn't open? Just call us.",
+    zh: "我们已打开 WhatsApp 并预填您的咨询——发送消息即可，我们会与您联系。若未打开，请直接致电。",
   },
   "form.another": { ru: "Отправить ещё запрос", en: "Send another enquiry", zh: "再提交一个咨询" },
   "form.defaultMsg": { ru: "Прошу подготовить коммерческое предложение по модели", en: "I would like a quote for the", zh: "我想获取以下机型的报价：" },

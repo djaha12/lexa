@@ -4,6 +4,7 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/ui";
 import { PhoneNumbers } from "@/components/PhoneNumbers";
 import { CatalogCTA } from "@/components/CatalogCTA";
+import { ShowcaseBand } from "@/components/ShowcaseBand";
 import { CategoryIcon, Icon } from "@/components/Icons";
 import { industries } from "@/data/site";
 import { getLocale } from "@/i18n/server";
@@ -125,6 +126,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+
+      {/* SHOWCASE PHOTO BAND (renders only when a photo is configured) */}
+      <ShowcaseBand locale={locale} />
 
       {/* FULL CATALOGUE CTA */}
       <section className="bg-white py-14 md:py-16">
